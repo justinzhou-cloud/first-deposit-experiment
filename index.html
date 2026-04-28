@@ -1,102 +1,346 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>First Deposit Experiment — Justin Zhou</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="dashboard.css" />
-  </head>
-  <body>
-    <header class="am-top" role="banner">
-      <div class="am-top-inner">
-        <div>
-          <h1 class="am-title">First Deposit: What We See, What We Believe, What We Should Test</h1>
-          <p class="am-sub" id="header-sub">
-            <strong>DRI:</strong> Justin Zhou &nbsp;|&nbsp;
-            Crimson joiners Oct 2025 &ndash; Mar 2026
-          </p>
-        </div>
-        <span class="am-badge">Crimson</span>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment Design: First $10 Purchase on Us</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 24px;
+      color: #000;
+      line-height: 1.6;
+    }
+    h1 { font-size: 22px; margin-bottom: 4px; }
+    h2 { font-size: 18px; margin-top: 36px; border-bottom: 1px solid #000; padding-bottom: 4px; }
+    h3 { font-size: 15px; margin-top: 20px; }
+    p { color: #000; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0 20px 0; font-size: 13px; }
+    th, td { border: 1px solid #999; padding: 7px 10px; text-align: left; vertical-align: top; }
+    th { font-weight: 600; }
+    ol, ul { margin: 8px 0 12px 1.2rem; padding: 0; }
+    li { margin-bottom: 8px; line-height: 1.55; }
+    hr { border: none; border-top: 1px solid #ccc; margin: 40px 0; }
+  </style>
+</head>
+<body>
 
-    <div id="am-warn" class="am-warn" hidden></div>
+<h1>Experiment Design: &ldquo;Your first $10 purchase is on us&rdquo;</h1>
+<p><strong>DRI:</strong> Justin Zhou &nbsp;|&nbsp; Last updated: Apr 27, 2026</p>
+<p>
+  <strong>Working team:</strong>
+  Eng: Kenny, Sheetal, Stefanie, Myles, Shauna &nbsp;|&nbsp;
+  Design: Sarah &nbsp;|&nbsp;
+  Ops: Justin &nbsp;|&nbsp;
+  Product: Daniel Madwed &nbsp;|&nbsp;
+  Analytics: Tharun &nbsp;|&nbsp;
+  Banners: Justin
+</p>
 
-    <div id="am-panel-exp">
-      <article class="am-doc">
+<hr>
 
-        <header class="am-doc-hd">
-          <h2 class="am-doc-title">Experiment Design: &ldquo;Your first $10 spend is on us&rdquo;</h2>
-          <p class="am-doc-dri"><strong>DRI:</strong> Justin Zhou</p>
-          <div class="am-doc-team">
-            <strong>Working team:</strong>
-            Eng: Kenny, Sheetal, Stefanie, Myles, Shauna &nbsp;|&nbsp;
-            Design: Sarah &nbsp;|&nbsp;
-            Ops: Justin &nbsp;|&nbsp;
-            Marketing: Laura, Shannen, Jaila &nbsp;|&nbsp;
-            Product: Daniel Madwed &nbsp;|&nbsp;
-            Analytics: Tharun
-          </div>
-          <p class="am-doc-updated">Last updated: <span id="exp-updated"></span></p>
-        </header>
+<h2>Business problem</h2>
 
-        <section class="am-doc-sec">
-          <h3>Business problem</h3>
-          <div id="exp-problem"></div>
-        </section>
+<p><strong>This experiment tests whether a bundled incentive &mdash; covering a user&rsquo;s first purchase when they make an outside deposit &mdash; can activate the 89% of Crimson users who have never deposited.</strong> Depositors have 16&times; the POS spend and 50&times; the second-deposit rate of non-depositors. The offer incentivizes both deposit and spend in a single action, creating a first &ldquo;money moment&rdquo; that we believe drives sustained engagement. Stratifying by user tenure (F7D, F7&ndash;F28D, 28D+) tells us where on the user lifecycle this lever works best.</p>
 
-        <section class="am-doc-sec">
-          <h3>What the data tells us</h3>
-          <div id="exp-evidence"></div>
-        </section>
+<table>
+  <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Dashers who joined Crimson (Oct 2025&ndash;Mar 2026)</td><td><strong>1,393,419</strong></td></tr>
+    <tr><td>Ever made a first external deposit</td><td><strong>11.1%</strong> (154,034)</td></tr>
+    <tr><td>MAU with $0 ancillary deposits (L28D)</td><td><strong>87&ndash;89%</strong></td></tr>
+    <tr><td>New dashers with no deposit in first 28d</td><td><strong>94%</strong></td></tr>
+    <tr><td>&ldquo;Near-miss&rdquo; ($180&ndash;$199) share of MAU</td><td>~0.25%</td></tr>
+  </tbody>
+</table>
 
-        <section class="am-doc-sec">
-          <h3>Core belief (what we want to falsify)</h3>
-          <div id="exp-belief"></div>
-        </section>
+<p>~1,239,385 dashers never added money at all. The &ldquo;near-miss&rdquo; group is negligible. Growth does not come from nudging the few who are close &mdash; it comes from <strong>activating the many who never begin</strong>.</p>
 
-        <section class="am-doc-sec">
-          <h3>What we should do</h3>
-          <div id="exp-proposal"></div>
-        </section>
+<h2>What the data tells us</h2>
 
-        <section class="am-doc-sec">
-          <h3>Hypotheses</h3>
-          <div id="exp-hypotheses"></div>
-        </section>
+<h3>1. Early behavior predicts durability</h3>
+<p>The ~0.45% who become durable within 14 days separate immediately:</p>
+<table>
+  <thead><tr><th></th><th>Durable in 14d</th><th>Everyone else</th><th>Multiple</th></tr></thead>
+  <tbody>
+    <tr><td>Shift hours</td><td>51h</td><td>17h</td><td>3&times;</td></tr>
+    <tr><td>DxPay ($)</td><td>$670</td><td>$151</td><td>4&times;</td></tr>
+    <tr><td>POS spend ($)</td><td>$671</td><td>$40</td><td><strong>16&times;</strong></td></tr>
+    <tr><td>Second deposit rate</td><td>73%</td><td>1.4%</td><td><strong>50&times;</strong></td></tr>
+  </tbody>
+</table>
 
-        <section class="am-doc-sec">
-          <h3>Success metrics</h3>
-          <div id="exp-metrics"></div>
-        </section>
+<h3>2. Deposit and spend happen in the same session</h3>
+<table>
+  <thead><tr><th></th><th>Depositors (154K)</th><th>Non-depositors (1.24M)</th><th>Diff</th></tr></thead>
+  <tbody>
+    <tr><td>Median card spend</td><td>$713</td><td>$98</td><td>+627%</td></tr>
+    <tr><td>Median Crimson gross</td><td>$2,802</td><td>$475</td><td>+490%</td></tr>
+    <tr><td>Median dash hours</td><td>88.5h</td><td>24.3h</td><td>+264%</td></tr>
+  </tbody>
+</table>
 
-        <section class="am-doc-sec">
-          <h3>Experiment design</h3>
-          <div id="exp-design"></div>
-        </section>
+<ul>
+  <li><strong>Card spend nearly doubles the day after deposit.</strong> OUT_POS volume is <strong>+98%</strong> in the 24h after vs. the 24h before the first deposit.</li>
+  <li><strong>67% of depositors swipe within 24h.</strong> Median time to first swipe: <strong>~5 hours</strong>. Deposit and spend are one session, not two decisions.</li>
+  <li><strong>Spending shifts toward need-based categories.</strong> Grocery share rises <strong>+2.8 pp</strong> (volume +149%). Rent, bills, and gaming rise. Gas declines. Deposits are pulled by <strong>intent to make a specific purchase</strong>.</li>
+  <li><strong>The typical first deposit is small.</strong> Median: <strong>$21</strong>. 48% are under $20. This is a top-up to cover an immediate need, not &ldquo;move my paycheck.&rdquo;</li>
+</ul>
 
-        <section class="am-doc-sec">
-          <h3>What would tell us the experiment worked?</h3>
-          <div id="exp-success"></div>
-        </section>
+<h3>3. Engagement &ne; durability</h3>
+<p>42&ndash;55% of new cohorts are <strong>engaged but not durable</strong>. Only ~1&ndash;2% reach durable. There are two parallel systems: an <em>engagement system</em> (dashing, spend) and an <em>inflow system</em> (external money in). Improving engagement does not automatically fix inflow.</p>
 
-        <section class="am-doc-sec">
-          <h3>Decision framework</h3>
-          <div id="exp-decisions"></div>
-        </section>
+<h2>What we should do</h2>
 
-        <section class="am-doc-sec">
-          <h3>Timeline</h3>
-          <div id="exp-timeline"></div>
-        </section>
+<p><strong>&ldquo;Your first $10 purchase is on us when you make an outside deposit on Crimson.&rdquo;</strong></p>
 
-      </article>
-    </div>
+<p>After the user makes an outside deposit ($10+) on Crimson, their first card purchase (any MCC, up to $10) is credited back automatically. One reward per user.</p>
 
-    <script src="first-anc-behavior.js"></script>
-    <script src="dashboard.js"></script>
-  </body>
+<h3>Why this framing</h3>
+<table>
+  <thead><tr><th>Alternative</th><th>Problem</th></tr></thead>
+  <tbody>
+    <tr><td>Deposit-only bonus ($5 for first deposit)</td><td>No reason to use the card afterward; doesn&rsquo;t create a &ldquo;money moment&rdquo;</td></tr>
+    <tr><td>Spend-only bonus (cashback)</td><td>Rewards behavior that already happens in 42&ndash;55% of engaged non-depositors; doesn&rsquo;t move deposits</td></tr>
+    <tr><td>Two-step (deposit&rarr;spend&rarr;reward)</td><td>Two drop-off points in a funnel where 94% don&rsquo;t clear step 1</td></tr>
+    <tr><td><strong>&ldquo;First $10 purchase on us&rdquo;</strong></td><td><strong>Purchase is the headline; deposit is the natural action. One step, not two.</strong></td></tr>
+  </tbody>
+</table>
+
+<h2>Hypotheses</h2>
+
+<ol>
+  <li><strong>H1: The bundled offer breaks the $0 barrier.</strong> Treatment users will have a higher first-deposit rate than control.</li>
+  <li><strong>H2: Early users are more malleable.</strong> The deposit-rate lift will be largest for F7D, moderate for F7&ndash;F28D, and smallest for 28D+.</li>
+  <li><strong>H3: The first money moment drives spend.</strong> Treatment depositors will make their first card purchase faster (vs. ~5h organic median).</li>
+  <li><strong>H4: The behavior is sticky.</strong> Treatment depositors will show higher card spending and deposit activity in the 30 days <em>after</em> the credit vs. control.</li>
+  <li><strong>H5: Second deposit follows.</strong> Treatment depositors will deposit again within 30 days at a higher rate than the ~1.4% baseline.</li>
+</ol>
+
+<h2>Success metrics</h2>
+
+<h3>Primary</h3>
+<table>
+  <thead><tr><th>Metric</th><th>Definition</th><th>Baseline</th><th>Success threshold</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>First external deposit rate</strong></td>
+      <td>% of eligible users making first ancillary deposit ($10+) within the offer window</td>
+      <td>~6% in F28D</td>
+      <td>+3 pp lift vs control</td>
+    </tr>
+    <tr>
+      <td><strong>Durable within 14 days</strong></td>
+      <td>% of users who reach durable status within 14 days of first deposit</td>
+      <td>~0.45%</td>
+      <td>Stat. sig. lift vs control</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Secondary</h3>
+<table>
+  <thead><tr><th>Metric</th><th>Why it matters</th></tr></thead>
+  <tbody>
+    <tr><td>Time from deposit to first card swipe</td><td>Tests whether bundled offer accelerates deposit&rarr;spend link (&lt;4h vs ~5h organic)</td></tr>
+    <tr><td>F14D card spend per user</td><td>Tracks whether the offer drives spend beyond the $10 credit</td></tr>
+    <tr><td>30d second deposit rate</td><td>Tests stickiness: do treatment depositors come back? (+50% relative lift vs ~1.4%)</td></tr>
+    <tr><td>Post-credit 30d card spend</td><td>Tests whether behavior persists after the reward is consumed</td></tr>
+    <tr><td>Dashing hours (30d post)</td><td>+1% vs control = broader platform engagement signal</td></tr>
+  </tbody>
+</table>
+
+<h3>Check metrics</h3>
+<ul>
+  <li>Deposit size distribution vs. organic median of $21 (gaming check)</li>
+  <li>Card decline rate: &gt;5% increase = flag</li>
+  <li>Return/refund on the credited transaction</li>
+  <li>Cost per converted depositor (target: &lt;$15 all-in)</li>
+</ul>
+
+<h2>Experiment design</h2>
+
+<table>
+  <tbody>
+    <tr><td><strong>Method</strong></td><td>Randomized controlled trial, user-level, 50/50 split</td></tr>
+    <tr><td><strong>Eligibility</strong></td><td>All Crimson users who have never made an external deposit, regardless of tenure</td></tr>
+    <tr><td><strong>Stratification</strong></td><td>One treatment arm, one control. Results analyzed by tenure at enrollment:<br>&bull; <strong>F7D</strong> (day 0&ndash;7): brand-new users<br>&bull; <strong>F7&ndash;F28D</strong> (day 7&ndash;28): early users past first week<br>&bull; <strong>28D+</strong>: longer-tenured non-depositors<br>Tells us where on the lifecycle the incentive has the most impact.</td></tr>
+    <tr><td><strong>Promo window</strong></td><td>May 1&ndash;15, 2026. Banner turns on at enrollment, off after 14 days or on redemption &mdash; whichever comes first. Last day to make a qualifying deposit: May 15, 2026.</td></tr>
+    <tr><td><strong>Treatment</strong></td><td>&ldquo;Your first $10 purchase is on us when you make an outside deposit on Crimson.&rdquo; Single in-app banner. No drip sequence.</td></tr>
+    <tr><td><strong>Qualifying deposit</strong></td><td>Any outside deposit of $10+. Includes: direct deposit, other gig earnings, ACH, CashApp/Venmo/Apple Cash, cash. Excludes: DxPay, internal transfers, reversed/failed.</td></tr>
+    <tr><td><strong>Reward</strong></td><td>Credit on first card purchase after qualifying deposit, up to $10. Spend $5 &rarr; get $5. Spend $10+ &rarr; get $10. One per user.</td></tr>
+  </tbody>
+</table>
+
+<h3>Why 14 days (May 1&ndash;15)</h3>
+<p>The banner turns on May 1 and turns off May 15 (or on redemption, whichever comes first).</p>
+<table>
+  <thead><tr><th>Consideration</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Covers one full pay cycle</strong></td><td>Most gig workers are paid weekly or biweekly. 14 days ensures every user sees the offer during at least one payout when they have money to deposit.</td></tr>
+    <tr><td><strong>Covers the high-leverage F7D window</strong></td><td>The first 7 days are the most malleable period for new users. 14 days fully includes this window plus a buffer for users whose spending need arises in week 2.</td></tr>
+    <tr><td><strong>Conversion is fast once triggered</strong></td><td>67% of organic depositors swipe within 24h (median ~5h). The banner doesn&rsquo;t need to stay up for weeks &mdash; it just needs to be present when the spending need hits.</td></tr>
+    <tr><td><strong>Creates urgency</strong></td><td>A 14-day window is short enough to motivate action. A 28-day window has no urgency and increases banner fatigue with no incremental signal.</td></tr>
+    <tr><td><strong>7 days is too short</strong></td><td>Misses users whose pay cycle or spending need falls in week 2. Also leaves no exposure window for F7&ndash;F28D users who enter the experiment mid-tenure.</td></tr>
+  </tbody>
+</table>
+
+<h3>Sizing &amp; budget</h3>
+
+<p>The primary metric is first-deposit rate (baseline ~6%, detecting +3 pp lift). Sample size is set to power all three strata independently.</p>
+
+<table>
+  <thead><tr><th></th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Power analysis</strong></td><td>Two-proportion z-test, 90% power, &alpha;=0.05: <strong>~1,600 per arm</strong> for a +3 pp effect. Each of the three strata needs &ge;1,600 per arm to be independently powered.</td></tr>
+    <tr><td><strong>Target sample</strong></td><td><strong>~5,000 per arm per stratum &rarr; 15,000 per arm (30,000 total).</strong> Provides comfortable buffer for attrition in each stratum.</td></tr>
+    <tr><td>Eligible pool</td><td>All non-depositor Crimson users. F7D is the smallest stratum (~7K new eligible/week); F7&ndash;F28D and 28D+ are much larger. Enrollment runs until F7D reaches target (~5 weeks).</td></tr>
+    <tr><td>Expected conversion</td><td>~9% treatment vs. ~6% control</td></tr>
+    <tr><td>Max converting users</td><td>~1,350 at $10 max each</td></tr>
+    <tr><td><strong>Total budget cap</strong></td><td><strong>~$14,000 in credits.</strong> Per-user cost fixed at $10 max. If conversion exceeds 12%, cap enrollment early.</td></tr>
+  </tbody>
+</table>
+
+<h2>What would tell us the experiment worked?</h2>
+
+<ol>
+  <li>Treatment has a <strong>statistically significant higher first-deposit rate</strong> than control.</li>
+  <li>Treatment depositors <strong>become durable within 14 days at a higher rate</strong> than control depositors.</li>
+  <li>In the <strong>30 days after the credit</strong> (no incentive active), treatment depositors show <strong>higher card spending and deposit activity</strong> than control.</li>
+</ol>
+
+<h2>Decision framework</h2>
+
+<table>
+  <thead><tr><th>Result</th><th>What it means</th><th>Next step</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>All three strata show lift</strong></td>
+      <td>The incentive works regardless of tenure; the deposit barrier is spend-intent-driven across the lifecycle</td>
+      <td><strong>Scale to all non-depositors</strong> as a standing Crimson benefit</td>
+    </tr>
+    <tr>
+      <td><strong>F7D and F7&ndash;F28D lift, 28D+ does not</strong></td>
+      <td>The incentive works for early users; longer-tenured non-depositors have settled into a pattern the offer can&rsquo;t break</td>
+      <td><strong>Scale to all F28D users.</strong> Different lever needed for 28D+ re-engagement.</td>
+    </tr>
+    <tr>
+      <td><strong>Only F7D shows lift</strong></td>
+      <td>The first week is the only malleable window</td>
+      <td><strong>Make it a sign-up bonus.</strong> Explore different levers for D7+ non-depositors.</td>
+    </tr>
+    <tr>
+      <td><strong>Only 28D+ shows lift</strong></td>
+      <td>Unexpected &mdash; longer-tenured non-depositors were waiting for a reason, not stuck in a habit</td>
+      <td>Investigate further; consider re-engagement campaigns</td>
+    </tr>
+    <tr>
+      <td><strong>No stratum shows lift</strong></td>
+      <td>The $0 barrier is not spend-intent-driven; deposit behavior may be a trait, not a lever</td>
+      <td><strong>Scrap and rework.</strong> Shift to product-led activation (friction reduction, Plaid, auto-transfers).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Timeline</h2>
+
+<table>
+  <thead><tr><th>Milestone</th><th>Target date</th></tr></thead>
+  <tbody>
+    <tr><td>Doc finalized + shared with team and Sydney (legal)</td><td>Apr 24, 2026</td></tr>
+    <tr><td>CP copy approval + legal T&amp;C review</td><td>Apr 28, 2026</td></tr>
+    <tr><td>Banner created + eligibility logic built</td><td>Apr 30, 2026</td></tr>
+    <tr><td><strong>Banner on</strong></td><td>May 1, 2026</td></tr>
+    <tr><td><strong>Banner off / last qualifying deposit</strong></td><td>May 15, 2026</td></tr>
+    <tr><td>Week 1 early signal (F7D deposit rate)</td><td>May 8, 2026</td></tr>
+    <tr><td>Week 2 readout (deposit + first spend timing, stratified)</td><td>May 15, 2026</td></tr>
+    <tr><td>Full promo readout (all strata, card spend, dashing)</td><td>May 29, 2026</td></tr>
+    <tr><td>Post-period sustainability (30d after last credit, no incentive)</td><td>Jun 26, 2026</td></tr>
+  </tbody>
+</table>
+
+<h2>Messaging</h2>
+
+<p>One banner. On at enrollment, off after 14 days or on redemption.</p>
+
+<table>
+  <thead><tr><th>Trigger</th><th>Channel</th><th>Headline</th><th>Body</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Enrollment (Day 0)</td>
+      <td>In-app banner (persistent for 14 days)</td>
+      <td>Your first $10 purchase is on us</td>
+      <td>Make an outside deposit to Crimson and your first purchase is covered &mdash; up to $10. Min. $10 outside deposit required. Terms apply.</td>
+    </tr>
+    <tr>
+      <td>Qualifying deposit received</td>
+      <td>In-app confirmation</td>
+      <td>You&rsquo;re all set &mdash; your first $10 purchase is on us</td>
+      <td>Your outside deposit landed. Now make your first purchase and we&rsquo;ll cover up to $10.</td>
+    </tr>
+    <tr>
+      <td>Credit applied</td>
+      <td>In-app confirmation</td>
+      <td>$10 credited to your account</td>
+      <td>Nice! Your Crimson card is ready for whatever&rsquo;s next.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Promotional Terms</h2>
+
+<p>To qualify for the purchase credit (the &ldquo;Promotion&rdquo;), participants must: (1) have an active DoorDash Crimson Account in good standing; (2) make a qualifying outside deposit of at least ten dollars ($10) into their DoorDash Crimson Deposit Account between May 1, 2026 and May 15, 2026; (3) make a card purchase after the qualifying deposit; and (4) not have previously redeemed this specific promotional reward. A qualifying outside deposit includes direct deposit (payroll from another employer), earnings from other gig platforms, ACH transfer from another bank account, transfers through CashApp, Apple Cash, or Venmo, or cash deposit at a participating retailer. Dashing earnings, internal transfers within Crimson, reversed deposits, and failed deposits do not qualify for this Promotion.</p>
+
+<p>After completing a qualifying outside deposit, the participant&rsquo;s first card purchase (any merchant category, up to $10) will be credited back to their DoorDash Crimson Account automatically. If the purchase amount is less than ten dollars ($10), the credit will equal the purchase amount. If the purchase is ten dollars ($10) or more, the credit will be ten dollars ($10).</p>
+
+<p>This offer is available only to Dashers who received a direct communication about this promotion, cannot be transferred, and is not available to all Dashers. The last date to make a qualifying outside deposit under this promotion is May 15, 2026. The credit will be applied to the participant&rsquo;s DoorDash Crimson Account within 10 business days after the qualifying purchase is completed.</p>
+
+<p>DoorDash reserves the right to withhold or deduct credits it determines were provided in error, fraudulent, illegal, or in violation of the Dasher ICA terms or these terms, and to modify or cancel this Promotion at any time without prior notice. Limit one (1) promotional credit per eligible DoorDash Crimson account holder. Credits totaling $600 or more will be reported on tax form 1099-MISC.</p>
+
+<p>The DoorDash Crimson Deposit Account is established by Starion Bank, Member FDIC. The DoorDash Crimson Visa Debit Card is issued by Starion Bank pursuant to a license from Visa U.S.A. Inc. Certain fees, terms, and conditions are associated with the approval, maintenance, and use of the Deposit Account and Card. If you have any questions regarding your Deposit Account or Card, you should consult your Deposit Account Agreement and Fee Schedule found in the Crimson Hub of the Dasher mobile app, on the DoorDash Crimson website at doordashcrimson.com, or contact us toll-free at 1-855-973-1040. Starion Bank does not endorse or sponsor and is not affiliated with third-party products or services offered or advertised by DoorDash.</p>
+
+<h2>General Frequently Asked Questions</h2>
+
+<h3>Who is eligible for this promotion?</h3>
+<p>Dashers who are eligible for this promotion must: (1) have an active DoorDash Crimson Account in good standing; (2) make a qualifying outside deposit of at least $10 into their DoorDash Crimson Deposit Account during the offer window; and (3) not have previously redeemed this specific promotional credit. This offer is not available to all Dashers. This offer is only available to Dashers who received a direct communication about this promotion and cannot be transferred.</p>
+
+<h3>What type of deposit qualifies for this promotion?</h3>
+<p>A qualifying outside deposit includes direct deposit (payroll from another employer), earnings from other gig platforms (Uber, Lyft, Instacart, etc.), ACH transfer from another bank account, transfers through CashApp, Apple Cash, or Venmo, or cash deposit at a participating retailer. Dashing earnings (DxPay), internal transfers within Crimson, reversed deposits, and failed deposits do not qualify.</p>
+
+<h3>Do earnings from other gig platforms qualify?</h3>
+<p>Yes, earnings from other gig platforms qualify as an outside deposit under this promotion.</p>
+
+<h3>How much do I get back?</h3>
+<p>After making a qualifying outside deposit of $10 or more, your first card purchase is covered up to $10. If you spend $5, you get $5 back. If you spend $10 or more, you get $10 back. Limit one credit per Dasher.</p>
+
+<h3>What can I buy with my first purchase?</h3>
+<p>Any purchase made with your DoorDash Crimson Visa Debit Card qualifies. There are no restrictions on merchant category &mdash; groceries, gas, bills, restaurants, online shopping, and anything else you use your card for.</p>
+
+<h3>When do I receive my credit?</h3>
+<p>Your credit will be applied directly to your DoorDash Crimson Account within 10 business days after your qualifying purchase is completed.</p>
+
+<h3>Do I need to deposit and purchase in the same day?</h3>
+<p>No. Once your qualifying outside deposit of $10 or more is received, your next card purchase (whenever you make it during the offer window) will be credited back up to $10.</p>
+
+<h3>What are the benefits of a DoorDash Crimson account?</h3>
+<p>For all users:</p>
+<ul>
+  <li>Instant<sup>1</sup> access to your earnings.</li>
+  <li>2% cash back<sup>2</sup> on gas at the pump.</li>
+  <li>DoorDash Crimson funds are FDIC-insured through Starion Bank. FDIC insurance limitations apply. Visit FDIC and refer to the DoorDash Crimson Deposit Account Agreement for more details.</li>
+</ul>
+<p>For those who make outside deposits:</p>
+<ul>
+  <li>Get paid up to 2 days early<sup>3</sup>.</li>
+  <li>No transfers needed &mdash; conveniently pay bills from one place.</li>
+</ul>
+<p style="font-size:11px; color:#666; margin-top:12px;">
+  <sup>1</sup> Earnings deposits typically occur within seconds. There may be times when deposits are delayed or not completed.<br>
+  <sup>2</sup> Rewards earned by using your DoorDash Crimson Card for qualifying purchases as offered in the Crimson Hub. Cashback on gas limited to $600 in total spend per month, at the pump only. Rewards eligible to redeem in the Crimson Hub. Subject to eligibility requirements and limitations. May change without notice.<br>
+  <sup>3</sup> Early access to direct deposit funds not guaranteed. We provide access to your direct deposits from employer and government payers on the day we receive them, which is typically up to 2 days earlier than your scheduled pay date.
+</p>
+
+</body>
 </html>
