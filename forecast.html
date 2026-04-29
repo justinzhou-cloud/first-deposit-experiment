@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forecast: Evergreen First-Deposit Incentive through EOY 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1e2d31; --muted: #7e9299; --teal: #45818e; --teal-dark: #2e5f6a;
+      --teal-xl: #eef6f8; --border: #d6e5e9; --bg: #f3f7f8; --surface: #fff;
+      --green: #15803d; --green-soft: #e6f4ee; --red: #b91c1c; --red-soft: #fef2f2;
+      --amber: #d97706; --amber-soft: #fffbeb;
+      --font: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
+      --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .header { background: linear-gradient(135deg, #1e2d31 0%, var(--teal-dark) 100%); padding: 32px 28px 24px; color: #fff; }
+    .header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .header .subtitle { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+    .header .meta { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.6); }
+    .breadcrumb { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 28px; font-size: 12px; }
+    .breadcrumb a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 20px 24px 60px; }
+    .verdict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; box-shadow: 0 1px 4px rgba(69,129,142,0.1); position: relative; overflow: hidden; margin-bottom: 20px; }
+    .verdict-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--teal); }
+    .verdict-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+    .verdict-headline { font-size: 19px; font-weight: 800; line-height: 1.3; margin-bottom: 8px; }
+    .verdict-sub { font-size: 13px; line-height: 1.55; color: var(--muted); margin: 0; }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    @media (max-width: 700px) { .kpi-row { grid-template-columns: 1fr 1fr; } }
+    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 12px 10px; text-align: center; box-shadow: 0 1px 3px rgba(69,129,142,0.06); }
+    .kpi-value { font-size: 22px; font-weight: 800; line-height: 1.1; }
+    .kpi-value--green { color: var(--green); }
+    .kpi-value--teal { color: var(--teal); }
+    .kpi-value--amber { color: var(--amber); }
+    .kpi-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-top: 6px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 1px 4px rgba(69,129,142,0.1); overflow: hidden; margin-bottom: 16px; }
+    .sec-head { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 7px; background: var(--teal); color: #fff; margin: 0; padding: 11px 14px; }
+    .sec-head .sec-num { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); font-size: 10px; font-weight: 800; }
+    .card-body { padding: 16px 18px 18px; }
+
+    table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 0; }
+    th, td { padding: 8px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid #f0f4f5; }
+    th { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    th.num { text-align: right; }
+    tbody tr:hover td { background: var(--teal-xl); }
+    .total-row td { font-weight: 800; border-top: 2px solid var(--border); background: var(--teal-xl); }
+
+    .callout { border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+    .callout--green { background: var(--green-soft); border-left: 3px solid var(--green); }
+    .callout--amber { background: var(--amber-soft); border-left: 3px solid var(--amber); }
+    .callout--teal { background: var(--teal-xl); border-left: 3px solid var(--teal); }
+
+    .narrative { font-size: 13.5px; line-height: 1.7; }
+    .narrative p { margin: 0 0 12px; }
+    .narrative strong { font-weight: 800; }
+    h3.section-sub { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal); margin: 20px 0 8px; }
+    h3.section-sub:first-child { margin-top: 0; }
+  </style>
+</head>
+<body>
+
+<div class="breadcrumb"><a href="/">&larr; Experiment design</a> &nbsp;/&nbsp; <a href="funnel_analysis.html">Funnel analysis</a></div>
+
+<div class="header">
+  <h1>Forecast: Evergreen First-Deposit Incentive</h1>
+  <div class="subtitle">If we roll Exp 2 ($20 for $200+ first deposit) out to all eligible users, May&ndash;Dec 2026</div>
+  <div class="meta">DRI: Justin Zhou &nbsp;&bull;&nbsp; Modeled: Apr 29, 2026 &nbsp;&bull;&nbsp; Based on Exp 2 measured rates from <code>win_first_deposit_0212_static</code></div>
+</div>
+
+<div class="wrap">
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-value kpi-value--green">~2,976</div><div class="kpi-label">Incremental durables (May&ndash;Dec)</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--teal">$420K</div><div class="kpi-label">Total incentive cost</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--amber">$141</div><div class="kpi-label">Cost per incremental durable</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--teal">~2,530</div><div class="kpi-label">Quality-adjusted durables (~85%)</div></div>
+  </div>
+
+  <!-- ── 1. Assumptions ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">1</span> Assumptions</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Input</th><th class="num">Value</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Starting eligible pool (never-deposited, transfer-out &lt;50%)</td><td class="num">~844,000</td><td>Exp 2 static table (Feb 2026)</td></tr>
+          <tr><td>Monthly new Crimson joiners</td><td class="num">~30,000</td><td>First-deposit experiment design doc</td></tr>
+          <tr><td>% of joiners who never deposit in F28D</td><td class="num">94%</td><td>First-deposit experiment design doc</td></tr>
+          <tr><td>% of never-depositors meeting transfer-out &lt;50%</td><td class="num">~65%</td><td>Nancy's brief segmentation tables</td></tr>
+          <tr><td>Monthly new eligible inflow</td><td class="num">~18,330</td><td>30K &times; 94% &times; 65%</td></tr>
+          <tr><td>Control (organic) durable rate per monthly cohort</td><td class="num">0.535%</td><td>Exp 2 measured</td></tr>
+          <tr><td>Treatment durable rate per monthly cohort</td><td class="num">0.623%</td><td>Exp 2 measured</td></tr>
+          <tr><td>Lift (pp)</td><td class="num">+0.088 pp</td><td>Exp 2 measured</td></tr>
+          <tr><td>Relative lift</td><td class="num">+16.5%</td><td>Exp 2 measured</td></tr>
+          <tr><td>Reward per qualifier</td><td class="num">$20</td><td>Exp 2 design</td></tr>
+          <tr><td>Quality discount (Exp 2 durables vs organic)</td><td class="num">~15%</td><td>Durable quality analysis: retention &minus;2.1 pp, deposits &minus;10%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--amber">
+        <strong>Key simplifications:</strong> (1) Eligible pool depletes as users convert &mdash; each month's converting users exit the pool. (2) Users who received Exp 2 treatment (Feb&ndash;Mar) are excluded &mdash; they can't be re-treated. (3) Assumes the same measured rates hold at scale; in practice, lift may attenuate as you exhaust higher-intent users. (4) Forecast starts May 2026 (after your first-deposit experiment concludes).
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. Monthly forecast ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">2</span> Monthly forecast (May&ndash;Dec 2026)</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Each month: eligible pool &times; treatment durable rate = qualifiers. Incremental = (treatment rate &minus; control rate) &times; pool. Cost = qualifiers &times; $20. Pool shrinks as qualifiers + organic converters exit; grows as new joiners enter.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th class="num">Eligible pool</th>
+            <th class="num">Qualifiers ($200+)</th>
+            <th class="num">Organic would-be ($200+)</th>
+            <th class="num">Incremental durables</th>
+            <th class="num">Cost ($20&times;qualifiers)</th>
+            <th class="num">$/incr. durable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>May 2026</td>
+            <td class="num">844,000</td>
+            <td class="num">5,258</td>
+            <td class="num">4,515</td>
+            <td class="num">+743</td>
+            <td class="num">$105,166</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Jun</td>
+            <td class="num">857,072</td>
+            <td class="num">5,340</td>
+            <td class="num">4,585</td>
+            <td class="num">+754</td>
+            <td class="num">$106,790</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Jul</td>
+            <td class="num">870,062</td>
+            <td class="num">5,420</td>
+            <td class="num">4,655</td>
+            <td class="num">+766</td>
+            <td class="num">$108,408</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Aug</td>
+            <td class="num">882,972</td>
+            <td class="num">5,501</td>
+            <td class="num">4,724</td>
+            <td class="num">+777</td>
+            <td class="num">$110,017</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Sep</td>
+            <td class="num">895,801</td>
+            <td class="num">5,581</td>
+            <td class="num">4,793</td>
+            <td class="num">+789</td>
+            <td class="num">$111,619</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Oct</td>
+            <td class="num">908,550</td>
+            <td class="num">5,660</td>
+            <td class="num">4,861</td>
+            <td class="num">+800</td>
+            <td class="num">$113,213</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Nov</td>
+            <td class="num">921,220</td>
+            <td class="num">5,739</td>
+            <td class="num">4,929</td>
+            <td class="num">+811</td>
+            <td class="num">$114,800</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr>
+            <td>Dec</td>
+            <td class="num">933,811</td>
+            <td class="num">5,818</td>
+            <td class="num">4,996</td>
+            <td class="num">+822</td>
+            <td class="num">$116,380</td>
+            <td class="num">$141</td>
+          </tr>
+          <tr class="total-row">
+            <td>TOTAL (May&ndash;Dec)</td>
+            <td class="num">&mdash;</td>
+            <td class="num">44,317</td>
+            <td class="num">38,058</td>
+            <td class="num">+6,262</td>
+            <td class="num">$886,393</td>
+            <td class="num">$141</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--teal">
+        <strong>Pool math:</strong> Each month the pool loses ~5,258+ qualifiers (who earned the bonus and exited) but gains ~18,330 new eligible users. Net pool grows ~13K/month, which is why monthly incrementals grow slightly over time.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. Headline numbers ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">3</span> Headline: cost and impact through EOY</div>
+    <div class="card-body">
+
+      <table>
+        <thead><tr><th>Metric</th><th class="num">Raw</th><th class="num">Quality-adjusted (~85%)</th></tr></thead>
+        <tbody>
+          <tr><td>Incremental durable users (May&ndash;Dec)</td><td class="num">6,262</td><td class="num">~5,323</td></tr>
+          <tr><td>Total incentive spend</td><td class="num">$886,393</td><td class="num">$886,393</td></tr>
+          <tr><td>Cost per incremental durable</td><td class="num">$141</td><td class="num">~$167</td></tr>
+          <tr><td>Total qualifiers paid out</td><td class="num">44,317</td><td class="num">&mdash;</td></tr>
+          <tr><td>% of spend on "deadweight" (would have qualified anyway)</td><td class="num">~86%</td><td class="num">&mdash;</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--amber">
+        <strong>86% deadweight is inherent to the design.</strong> Out of ~44K users who earn the $20 bonus, ~38K would have deposited $200+ organically. Only ~6.3K are incrementally moved by the incentive. This is the same dynamic as the phone bill experiment &mdash; you're paying the whole pool to move the marginal users. The $141/durable cost already reflects this.
+      </div>
+
+      <h3 class="section-sub">What does ~5,300 quality-adjusted durables mean for the business?</h3>
+      <table>
+        <thead><tr><th>Impact dimension</th><th class="num">Per durable (Exp 2 measured)</th><th class="num">Total (5,323 durables)</th></tr></thead>
+        <tbody>
+          <tr><td>Avg monthly POS spend</td><td class="num">$773</td><td class="num">$4.1M / month</td></tr>
+          <tr><td>Avg monthly dashing hours</td><td class="num">27.3</td><td class="num">~145K hours / month</td></tr>
+          <tr><td>Avg monthly ancillary deposits</td><td class="num">$328</td><td class="num">$1.7M / month</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── 4. Scenarios ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">4</span> Scenarios: what if we change the parameters?</div>
+    <div class="card-body">
+
+      <h3 class="section-sub">Payout: $20 vs $10 vs $5</h3>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Assuming constant lift (conservative &mdash; same number of incremental durables regardless of reward size). Lower reward = lower cost per qualifier = lower total spend.</p>
+      <table>
+        <thead><tr><th>Reward</th><th class="num">Total spend (8 mo)</th><th class="num">Incr. durables</th><th class="num">$/incr. durable</th></tr></thead>
+        <tbody>
+          <tr><td>$20 (Exp 2 actual)</td><td class="num">$886K</td><td class="num">6,262</td><td class="num">$141</td></tr>
+          <tr><td>$10 (your experiment)</td><td class="num">$443K</td><td class="num">6,262</td><td class="num" style="color:var(--green); font-weight:700;">$71</td></tr>
+          <tr><td>$5</td><td class="num">$222K</td><td class="num">6,262</td><td class="num" style="color:var(--green); font-weight:700;">$35</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-sub">If lift attenuates at scale</h3>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Exp 2 targeted a pre-screened high-trust cohort (transfer-out &lt;50%). At full scale, lower-intent users enter and lift may decay.</p>
+      <table>
+        <thead><tr><th>Lift retention</th><th class="num">Relative lift</th><th class="num">Incr. durables (8 mo)</th><th class="num">$/incr. durable @ $20</th></tr></thead>
+        <tbody>
+          <tr><td>100% (Exp 2 rate holds)</td><td class="num">+16.5%</td><td class="num">6,262</td><td class="num">$141</td></tr>
+          <tr><td>75%</td><td class="num">+12.4%</td><td class="num">4,697</td><td class="num">$189</td></tr>
+          <tr><td>50%</td><td class="num">+8.25%</td><td class="num">3,131</td><td class="num">$283</td></tr>
+          <tr><td>25% (pessimistic)</td><td class="num">+4.13%</td><td class="num">1,566</td><td class="num">$566</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-sub">If we broaden eligibility (remove transfer-out &lt;50% filter)</h3>
+      <table>
+        <thead><tr><th>Eligibility</th><th class="num">Pool size (est.)</th><th class="num">Likely lift</th><th class="num">Incr. durables (8 mo)</th><th class="num">$/incr. durable @ $20</th></tr></thead>
+        <tbody>
+          <tr><td>Transfer-out &lt;50% (Exp 2)</td><td class="num">~844K</td><td class="num">+16.5%</td><td class="num">6,262</td><td class="num">$141</td></tr>
+          <tr><td>All never-depositors</td><td class="num">~1.3M</td><td class="num">~+10% (diluted)</td><td class="num">~5,800</td><td class="num">~$230</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--amber">
+        <strong>Broadening eligibility doesn't help much.</strong> The transfer-out &lt;50% filter is a quality screen. Removing it adds ~450K lower-intent users whose lift is likely weaker, diluting $/durable from $141 to ~$230. The Exp 2 targeting was well-chosen.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. Risks ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">5</span> Risks and caveats</div>
+    <div class="card-body narrative">
+      <ul style="font-size:13.5px;">
+        <li><strong>Lift attenuation at scale:</strong> Exp 2 ran for 22 days on a pre-screened cohort. An always-on program cycles through the highest-intent users first; later months pull from a lower-intent pool. Expect lift to decay 25&ndash;50% over time.</li>
+        <li><strong>Saturation:</strong> The eligible pool grows ~13K/month (net of conversions). Within 3&ndash;4 months, the program will have touched most of the current high-trust pool. Growth becomes dependent on new joiner inflow.</li>
+        <li><strong>Quality discount:</strong> Exp 2 treatment durables were ~15% lower quality than organic ones. The forecast applies an 85% quality factor, but this could worsen at scale as the marginal user gets progressively less engaged.</li>
+        <li><strong>Cannibalization:</strong> Some organic converters (the 38K "deadweight") may delay their deposit to ensure they qualify for the bonus. This doesn't create new cost but does shift timing.</li>
+        <li><strong>This does not account for LTV.</strong> The impact estimates (POS spend, dashing hours) are activity levels, not profit. The ROI case requires a durability LTV model to compare the $886K spend against lifetime value of ~5.3K incremental durables.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 6. Bottom line ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">6</span> Bottom line</div>
+    <div class="card-body narrative">
+      <p>At Exp 2's measured rates and $20 reward:</p>
+      <ul style="font-size:14px; font-weight:600;">
+        <li>~6,262 incremental durables through EOY (~5,323 quality-adjusted)</li>
+        <li>~$886K total incentive spend</li>
+        <li>~$141/durable raw, ~$167/durable quality-adjusted</li>
+      </ul>
+      <p>Both numbers beat the brief's $200&ndash;$250 evergreen threshold. <strong>If your $10-on-us experiment achieves comparable lift at half the payout, the same 8-month forecast drops to ~$443K total spend at ~$71/durable raw</strong> &mdash; a strong evergreen case.</p>
+      <p>The biggest risk is lift attenuation. If lift drops to 50% of Exp 2 levels at scale, cost rises to $283/durable &mdash; still within range but no longer a clear win. <strong>The experiment you're about to launch will tell us whether the bundled mechanism holds up at a lower reward.</strong></p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
