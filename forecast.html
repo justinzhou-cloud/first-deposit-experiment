@@ -78,10 +78,10 @@
 <div class="wrap">
 
   <div class="kpi-row">
-    <div class="kpi"><div class="kpi-value kpi-value--green">~2,976</div><div class="kpi-label">Incremental durables (May&ndash;Dec)</div></div>
-    <div class="kpi"><div class="kpi-value kpi-value--teal">$420K</div><div class="kpi-label">Total incentive cost</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--green">~10,320</div><div class="kpi-label">Incremental durables (May&ndash;Dec)</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--teal">$1.46M</div><div class="kpi-label">Total incentive cost</div></div>
     <div class="kpi"><div class="kpi-value kpi-value--amber">$141</div><div class="kpi-label">Cost per incremental durable</div></div>
-    <div class="kpi"><div class="kpi-value kpi-value--teal">~2,530</div><div class="kpi-label">Quality-adjusted durables (~85%)</div></div>
+    <div class="kpi"><div class="kpi-value kpi-value--teal">~8,772</div><div class="kpi-label">Quality-adjusted durables (~85%)</div></div>
   </div>
 
   <!-- ── 1. Assumptions ── -->
@@ -91,22 +91,23 @@
       <table>
         <thead><tr><th>Input</th><th class="num">Value</th><th>Source</th></tr></thead>
         <tbody>
-          <tr><td>Starting eligible pool (never-deposited, transfer-out &lt;50%)</td><td class="num">~844,000</td><td>Exp 2 static table (Feb 2026)</td></tr>
+          <tr><td>Eligibility</td><td class="num" colspan="2">Active Crimson users (1+ txn in L30D) with zero lifetime outside deposits. No transfer-out filter, no F30D exclusion.</td></tr>
+          <tr><td>Starting eligible pool</td><td class="num">~1,500,000</td><td>~1.5M active Crimson users with zero lifetime ancillary deposits (Nancy's brief: 1,506,842 as of Sept 2025, adjusted for growth)</td></tr>
           <tr><td>Monthly new Crimson joiners</td><td class="num">~30,000</td><td>First-deposit experiment design doc</td></tr>
           <tr><td>% of joiners who never deposit in F28D</td><td class="num">94%</td><td>First-deposit experiment design doc</td></tr>
-          <tr><td>% of never-depositors meeting transfer-out &lt;50%</td><td class="num">~65%</td><td>Nancy's brief segmentation tables</td></tr>
-          <tr><td>Monthly new eligible inflow</td><td class="num">~18,330</td><td>30K &times; 94% &times; 65%</td></tr>
-          <tr><td>Control (organic) durable rate per monthly cohort</td><td class="num">0.535%</td><td>Exp 2 measured</td></tr>
-          <tr><td>Treatment durable rate per monthly cohort</td><td class="num">0.623%</td><td>Exp 2 measured</td></tr>
+          <tr><td>Monthly new eligible inflow</td><td class="num">~28,200</td><td>30K &times; 94%</td></tr>
+          <tr><td>Monthly exit rate (any deposit in treatment)</td><td class="num">~2.56%</td><td>Exp 2 measured treatment any-deposit rate</td></tr>
+          <tr><td>Control (organic) durable rate per monthly cohort</td><td class="num">0.535%</td><td>Exp 2 measured (assumed same for broader pool)</td></tr>
+          <tr><td>Treatment durable rate per monthly cohort</td><td class="num">0.623%</td><td>Exp 2 measured (assumed same for broader pool)</td></tr>
           <tr><td>Lift (pp)</td><td class="num">+0.088 pp</td><td>Exp 2 measured</td></tr>
           <tr><td>Relative lift</td><td class="num">+16.5%</td><td>Exp 2 measured</td></tr>
           <tr><td>Reward per qualifier</td><td class="num">$20</td><td>Exp 2 design</td></tr>
-          <tr><td>Quality discount (Exp 2 durables vs organic)</td><td class="num">~15%</td><td>Durable quality analysis: retention &minus;2.1 pp, deposits &minus;10%</td></tr>
+          <tr><td>Quality discount (Exp 2 durables vs organic)</td><td class="num">~15%</td><td>Durable quality analysis</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout--amber">
-        <strong>Key simplifications:</strong> (1) Eligible pool depletes as users convert &mdash; each month's converting users exit the pool. (2) Users who received Exp 2 treatment (Feb&ndash;Mar) are excluded &mdash; they can't be re-treated. (3) Assumes the same measured rates hold at scale; in practice, lift may attenuate as you exhaust higher-intent users. (4) Forecast starts May 2026 (after your first-deposit experiment concludes).
+        <strong>Key assumption:</strong> We apply Exp 2's measured rates to the broader pool (which drops the transfer-out &lt;50% and F30D filters). In practice, the broader pool includes lower-trust users whose lift may be weaker &mdash; this forecast assumes same ROI as requested. Monitor closely in the first month. Pool depletes as users deposit and exit; new joiners flow in monthly.
       </div>
     </div>
   </div>
@@ -132,99 +133,109 @@
             <th>Month</th>
             <th class="num">Eligible pool</th>
             <th class="num">Qualifiers ($200+)</th>
-            <th class="num">Organic would-be ($200+)</th>
+            <th class="num">Organic would-be</th>
             <th class="num">Incremental durables</th>
-            <th class="num">Cost ($20&times;qualifiers)</th>
-            <th class="num">$/incr. durable</th>
+            <th class="num">Cost ($20&times;qual.)</th>
+            <th class="num">Cumul. durables</th>
+            <th class="num">Cumul. cost</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>May 2026</td>
-            <td class="num">844,000</td>
-            <td class="num">5,258</td>
-            <td class="num">4,515</td>
-            <td class="num">+743</td>
-            <td class="num">$105,166</td>
-            <td class="num">$141</td>
+            <td class="num">1,500,000</td>
+            <td class="num">9,345</td>
+            <td class="num">8,025</td>
+            <td class="num">+1,320</td>
+            <td class="num">$186,900</td>
+            <td class="num">1,320</td>
+            <td class="num">$187K</td>
           </tr>
           <tr>
             <td>Jun</td>
-            <td class="num">857,072</td>
-            <td class="num">5,340</td>
-            <td class="num">4,585</td>
-            <td class="num">+754</td>
-            <td class="num">$106,790</td>
-            <td class="num">$141</td>
+            <td class="num">1,489,800</td>
+            <td class="num">9,282</td>
+            <td class="num">7,970</td>
+            <td class="num">+1,311</td>
+            <td class="num">$185,630</td>
+            <td class="num">2,631</td>
+            <td class="num">$373K</td>
           </tr>
           <tr>
             <td>Jul</td>
-            <td class="num">870,062</td>
-            <td class="num">5,420</td>
-            <td class="num">4,655</td>
-            <td class="num">+766</td>
-            <td class="num">$108,408</td>
-            <td class="num">$141</td>
+            <td class="num">1,479,861</td>
+            <td class="num">9,219</td>
+            <td class="num">7,917</td>
+            <td class="num">+1,302</td>
+            <td class="num">$184,394</td>
+            <td class="num">3,933</td>
+            <td class="num">$557K</td>
           </tr>
           <tr>
             <td>Aug</td>
-            <td class="num">882,972</td>
-            <td class="num">5,501</td>
-            <td class="num">4,724</td>
-            <td class="num">+777</td>
-            <td class="num">$110,017</td>
-            <td class="num">$141</td>
+            <td class="num">1,470,177</td>
+            <td class="num">9,159</td>
+            <td class="num">7,866</td>
+            <td class="num">+1,294</td>
+            <td class="num">$183,187</td>
+            <td class="num">5,227</td>
+            <td class="num">$740K</td>
           </tr>
           <tr>
             <td>Sep</td>
-            <td class="num">895,801</td>
-            <td class="num">5,581</td>
-            <td class="num">4,793</td>
-            <td class="num">+789</td>
-            <td class="num">$111,619</td>
-            <td class="num">$141</td>
+            <td class="num">1,460,740</td>
+            <td class="num">9,100</td>
+            <td class="num">7,815</td>
+            <td class="num">+1,285</td>
+            <td class="num">$182,013</td>
+            <td class="num">6,512</td>
+            <td class="num">$922K</td>
           </tr>
           <tr>
             <td>Oct</td>
-            <td class="num">908,550</td>
-            <td class="num">5,660</td>
-            <td class="num">4,861</td>
-            <td class="num">+800</td>
-            <td class="num">$113,213</td>
-            <td class="num">$141</td>
+            <td class="num">1,451,545</td>
+            <td class="num">9,043</td>
+            <td class="num">7,766</td>
+            <td class="num">+1,277</td>
+            <td class="num">$180,866</td>
+            <td class="num">7,789</td>
+            <td class="num">$1.10M</td>
           </tr>
           <tr>
             <td>Nov</td>
-            <td class="num">921,220</td>
-            <td class="num">5,739</td>
-            <td class="num">4,929</td>
-            <td class="num">+811</td>
-            <td class="num">$114,800</td>
-            <td class="num">$141</td>
+            <td class="num">1,442,585</td>
+            <td class="num">8,987</td>
+            <td class="num">7,718</td>
+            <td class="num">+1,269</td>
+            <td class="num">$179,749</td>
+            <td class="num">9,058</td>
+            <td class="num">$1.28M</td>
           </tr>
           <tr>
             <td>Dec</td>
-            <td class="num">933,811</td>
-            <td class="num">5,818</td>
-            <td class="num">4,996</td>
-            <td class="num">+822</td>
-            <td class="num">$116,380</td>
-            <td class="num">$141</td>
+            <td class="num">1,433,855</td>
+            <td class="num">8,933</td>
+            <td class="num">7,671</td>
+            <td class="num">+1,262</td>
+            <td class="num">$178,660</td>
+            <td class="num">10,320</td>
+            <td class="num">$1.46M</td>
           </tr>
           <tr class="total-row">
             <td>TOTAL (May&ndash;Dec)</td>
             <td class="num">&mdash;</td>
-            <td class="num">44,317</td>
-            <td class="num">38,058</td>
-            <td class="num">+6,262</td>
-            <td class="num">$886,393</td>
-            <td class="num">$141</td>
+            <td class="num">73,068</td>
+            <td class="num">62,748</td>
+            <td class="num">+10,320</td>
+            <td class="num">$1,461,399</td>
+            <td class="num">10,320</td>
+            <td class="num">$1.46M</td>
           </tr>
         </tbody>
       </table>
 
       <div class="callout callout--teal">
-        <strong>Pool math:</strong> Each month the pool loses ~5,258+ qualifiers (who earned the bonus and exited) but gains ~18,330 new eligible users. Net pool grows ~13K/month, which is why monthly incrementals grow slightly over time.
+        <strong>Pool math:</strong> Each month ~2.56% of the pool makes any deposit and exits (including sub-$200 depositors). ~28,200 new eligible users flow in. Net pool declines ~10K/month as exit &gt; inflow, so monthly incrementals tick down slightly (1,320 &rarr; 1,262). $/incremental durable stays constant at $141 because the rates are held constant.
       </div>
     </div>
   </div>
@@ -237,25 +248,25 @@
       <table>
         <thead><tr><th>Metric</th><th class="num">Raw</th><th class="num">Quality-adjusted (~85%)</th></tr></thead>
         <tbody>
-          <tr><td>Incremental durable users (May&ndash;Dec)</td><td class="num">6,262</td><td class="num">~5,323</td></tr>
-          <tr><td>Total incentive spend</td><td class="num">$886,393</td><td class="num">$886,393</td></tr>
+          <tr><td>Incremental durable users (May&ndash;Dec)</td><td class="num">10,320</td><td class="num">~8,772</td></tr>
+          <tr><td>Total incentive spend</td><td class="num">$1,461,399</td><td class="num">$1,461,399</td></tr>
           <tr><td>Cost per incremental durable</td><td class="num">$141</td><td class="num">~$167</td></tr>
-          <tr><td>Total qualifiers paid out</td><td class="num">44,317</td><td class="num">&mdash;</td></tr>
+          <tr><td>Total qualifiers paid out</td><td class="num">73,068</td><td class="num">&mdash;</td></tr>
           <tr><td>% of spend on "deadweight" (would have qualified anyway)</td><td class="num">~86%</td><td class="num">&mdash;</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout--amber">
-        <strong>86% deadweight is inherent to the design.</strong> Out of ~44K users who earn the $20 bonus, ~38K would have deposited $200+ organically. Only ~6.3K are incrementally moved by the incentive. This is the same dynamic as the phone bill experiment &mdash; you're paying the whole pool to move the marginal users. The $141/durable cost already reflects this.
+        <strong>86% deadweight is inherent to the design.</strong> Out of ~73K users who earn the $20 bonus, ~63K would have deposited $200+ organically. Only ~10.3K are incrementally moved by the incentive. This is the same dynamic as the phone bill experiment &mdash; you're paying the whole pool to move the marginal users. The $141/durable cost already reflects this.
       </div>
 
-      <h3 class="section-sub">What does ~5,300 quality-adjusted durables mean for the business?</h3>
+      <h3 class="section-sub">What does ~8,800 quality-adjusted durables mean for the business?</h3>
       <table>
-        <thead><tr><th>Impact dimension</th><th class="num">Per durable (Exp 2 measured)</th><th class="num">Total (5,323 durables)</th></tr></thead>
+        <thead><tr><th>Impact dimension</th><th class="num">Per durable (Exp 2 measured)</th><th class="num">Total (8,772 durables)</th></tr></thead>
         <tbody>
-          <tr><td>Avg monthly POS spend</td><td class="num">$773</td><td class="num">$4.1M / month</td></tr>
-          <tr><td>Avg monthly dashing hours</td><td class="num">27.3</td><td class="num">~145K hours / month</td></tr>
-          <tr><td>Avg monthly ancillary deposits</td><td class="num">$328</td><td class="num">$1.7M / month</td></tr>
+          <tr><td>Avg monthly POS spend</td><td class="num">$773</td><td class="num">$6.8M / month</td></tr>
+          <tr><td>Avg monthly dashing hours</td><td class="num">27.3</td><td class="num">~239K hours / month</td></tr>
+          <tr><td>Avg monthly ancillary deposits</td><td class="num">$328</td><td class="num">$2.9M / month</td></tr>
         </tbody>
       </table>
     </div>
@@ -271,35 +282,26 @@
       <table>
         <thead><tr><th>Reward</th><th class="num">Total spend (8 mo)</th><th class="num">Incr. durables</th><th class="num">$/incr. durable</th></tr></thead>
         <tbody>
-          <tr><td>$20 (Exp 2 actual)</td><td class="num">$886K</td><td class="num">6,262</td><td class="num">$141</td></tr>
-          <tr><td>$10 (your experiment)</td><td class="num">$443K</td><td class="num">6,262</td><td class="num" style="color:var(--green); font-weight:700;">$71</td></tr>
-          <tr><td>$5</td><td class="num">$222K</td><td class="num">6,262</td><td class="num" style="color:var(--green); font-weight:700;">$35</td></tr>
+          <tr><td>$20 (Exp 2 actual)</td><td class="num">$1.46M</td><td class="num">10,320</td><td class="num">$141</td></tr>
+          <tr><td>$10</td><td class="num">$731K</td><td class="num">10,320</td><td class="num" style="color:var(--green); font-weight:700;">$71</td></tr>
+          <tr><td>$5</td><td class="num">$365K</td><td class="num">10,320</td><td class="num" style="color:var(--green); font-weight:700;">$35</td></tr>
         </tbody>
       </table>
 
       <h3 class="section-sub">If lift attenuates at scale</h3>
-      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Exp 2 targeted a pre-screened high-trust cohort (transfer-out &lt;50%). At full scale, lower-intent users enter and lift may decay.</p>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Exp 2 targeted a pre-screened cohort (transfer-out &lt;50%). The broader eligibility now includes lower-trust users; lift may decay.</p>
       <table>
         <thead><tr><th>Lift retention</th><th class="num">Relative lift</th><th class="num">Incr. durables (8 mo)</th><th class="num">$/incr. durable @ $20</th></tr></thead>
         <tbody>
-          <tr><td>100% (Exp 2 rate holds)</td><td class="num">+16.5%</td><td class="num">6,262</td><td class="num">$141</td></tr>
-          <tr><td>75%</td><td class="num">+12.4%</td><td class="num">4,697</td><td class="num">$189</td></tr>
-          <tr><td>50%</td><td class="num">+8.25%</td><td class="num">3,131</td><td class="num">$283</td></tr>
-          <tr><td>25% (pessimistic)</td><td class="num">+4.13%</td><td class="num">1,566</td><td class="num">$566</td></tr>
-        </tbody>
-      </table>
-
-      <h3 class="section-sub">If we broaden eligibility (remove transfer-out &lt;50% filter)</h3>
-      <table>
-        <thead><tr><th>Eligibility</th><th class="num">Pool size (est.)</th><th class="num">Likely lift</th><th class="num">Incr. durables (8 mo)</th><th class="num">$/incr. durable @ $20</th></tr></thead>
-        <tbody>
-          <tr><td>Transfer-out &lt;50% (Exp 2)</td><td class="num">~844K</td><td class="num">+16.5%</td><td class="num">6,262</td><td class="num">$141</td></tr>
-          <tr><td>All never-depositors</td><td class="num">~1.3M</td><td class="num">~+10% (diluted)</td><td class="num">~5,800</td><td class="num">~$230</td></tr>
+          <tr><td>100% (Exp 2 rate holds)</td><td class="num">+16.5%</td><td class="num">10,320</td><td class="num">$141</td></tr>
+          <tr><td>75%</td><td class="num">+12.4%</td><td class="num">7,740</td><td class="num">$189</td></tr>
+          <tr><td>50%</td><td class="num">+8.25%</td><td class="num">5,160</td><td class="num">$283</td></tr>
+          <tr><td>25% (pessimistic)</td><td class="num">+4.13%</td><td class="num">2,580</td><td class="num">$566</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout--amber">
-        <strong>Broadening eligibility doesn't help much.</strong> The transfer-out &lt;50% filter is a quality screen. Removing it adds ~450K lower-intent users whose lift is likely weaker, diluting $/durable from $141 to ~$230. The Exp 2 targeting was well-chosen.
+        <strong>The broadened eligibility is already reflected in this forecast.</strong> The ~1.5M pool includes all never-depositors (no transfer-out filter). If the lift attenuates for the lower-trust segment, the effective scenario is somewhere between the 75% and 100% rows above.
       </div>
     </div>
   </div>
@@ -426,14 +428,14 @@
   <div class="card">
     <div class="sec-head"><span class="sec-num">7</span> Bottom line</div>
     <div class="card-body narrative">
-      <p>At Exp 2's measured rates and $20 reward:</p>
+      <p>At Exp 2's measured rates, $20 reward, all never-deposited active users eligible:</p>
       <ul style="font-size:14px; font-weight:600;">
-        <li>~6,262 incremental durables through EOY (~5,323 quality-adjusted)</li>
-        <li>~$886K total incentive spend</li>
+        <li>~10,320 incremental durables through EOY (~8,772 quality-adjusted)</li>
+        <li>~$1.46M total incentive spend</li>
         <li>~$141/durable raw, ~$167/durable quality-adjusted</li>
+        <li>~$6.8M/month in incremental POS spend from those durables</li>
       </ul>
-      <p>Both numbers beat the brief's $200&ndash;$250 evergreen threshold. <strong>If your $10-on-us experiment achieves comparable lift at half the payout, the same 8-month forecast drops to ~$443K total spend at ~$71/durable raw</strong> &mdash; a strong evergreen case.</p>
-      <p>The biggest risk is lift attenuation. If lift drops to 50% of Exp 2 levels at scale, cost rises to $283/durable &mdash; still within range but no longer a clear win. <strong>The experiment you're about to launch will tell us whether the bundled mechanism holds up at a lower reward.</strong></p>
+      <p>Both cost numbers beat the brief's $200&ndash;$250 evergreen threshold. The biggest risk is lift attenuation on the broader (non-filtered) pool. Even at 75% lift retention, cost stays under $200/durable. At 50% retention ($283/durable), the program is marginal and may need the transfer-out filter reinstated to stay efficient.</p>
     </div>
   </div>
 
@@ -444,10 +446,10 @@
 (function () {
   /* ── Forecast charts ── */
   var months = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var incrDurables = [743, 754, 766, 777, 789, 800, 811, 822];
+  var incrDurables = [1320, 1311, 1302, 1294, 1285, 1277, 1269, 1262];
   var cumDurables = [];
   var cumCost = [];
-  var monthlyCost = [105166, 106790, 108408, 110017, 111619, 113213, 114800, 116380];
+  var monthlyCost = [186900, 185630, 184394, 183187, 182013, 180866, 179749, 178660];
   var running = 0; var runCost = 0;
   for (var i = 0; i < months.length; i++) {
     running += incrDurables[i]; cumDurables.push(running);
