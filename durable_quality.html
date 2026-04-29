@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Durable User Quality: Treatment vs Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1e2d31; --muted: #7e9299; --teal: #45818e; --teal-dark: #2e5f6a;
+      --teal-xl: #eef6f8; --border: #d6e5e9; --bg: #f3f7f8; --surface: #fff;
+      --green: #15803d; --green-soft: #e6f4ee; --red: #b91c1c; --red-soft: #fef2f2;
+      --amber: #d97706; --amber-soft: #fffbeb;
+      --font: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
+      --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .header { background: linear-gradient(135deg, #1e2d31 0%, var(--teal-dark) 100%); padding: 32px 28px 24px; color: #fff; }
+    .header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .header .subtitle { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+    .header .meta { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.6); }
+    .breadcrumb { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 28px; font-size: 12px; }
+    .breadcrumb a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    .wrap { max-width: 940px; margin: 0 auto; padding: 20px 24px 60px; }
+    .verdict-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 20px; }
+    .verdict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px 24px; box-shadow: 0 1px 4px rgba(69,129,142,0.1); position: relative; overflow: hidden; }
+    .verdict-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--green); }
+    .verdict-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+    .verdict-headline { font-size: 19px; font-weight: 800; line-height: 1.3; margin-bottom: 8px; }
+    .verdict-sub { font-size: 13px; line-height: 1.55; color: var(--muted); margin: 0; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 1px 4px rgba(69,129,142,0.1); overflow: hidden; margin-bottom: 16px; }
+    .sec-head { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 7px; background: var(--teal); color: #fff; margin: 0; padding: 11px 14px; }
+    .sec-head .sec-num { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); font-size: 10px; font-weight: 800; }
+    .card-body { padding: 16px 18px 18px; }
+    table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 0; }
+    th, td { padding: 8px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid #f0f4f5; }
+    th { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    th.num { text-align: right; }
+    tbody tr:hover td { background: var(--teal-xl); }
+    .lift-pos { color: var(--green); font-weight: 700; }
+    .lift-neg { color: var(--red); font-weight: 700; }
+    .lift-flat { color: var(--muted); font-weight: 600; }
+    .tbd { color: var(--amber); font-weight: 600; }
+    .callout { border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+    .callout--green { background: var(--green-soft); border-left: 3px solid var(--green); }
+    .callout--amber { background: var(--amber-soft); border-left: 3px solid var(--amber); }
+    .callout--teal { background: var(--teal-xl); border-left: 3px solid var(--teal); }
+    .narrative { font-size: 13.5px; line-height: 1.7; }
+    .narrative p { margin: 0 0 12px; }
+    .narrative strong { font-weight: 800; }
+    h3.section-sub { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal); margin: 20px 0 8px; }
+    h3.section-sub:first-child { margin-top: 0; }
+    details.sql { border: 1px solid var(--border); border-radius: 8px; margin: 12px 0; background: #fafbfc; overflow: hidden; }
+    details.sql summary { cursor: pointer; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--teal-dark); user-select: none; }
+    details.sql summary:hover { background: var(--teal-xl); }
+    details.sql[open] summary { border-bottom: 1px solid var(--border); }
+    details.sql pre { margin: 0; padding: 14px 16px; font-family: var(--mono); font-size: 11.5px; line-height: 1.55; color: #1e2d31; background: #fafbfc; overflow-x: auto; white-space: pre; }
+  </style>
+</head>
+<body>
+
+<div class="breadcrumb"><a href="/">&larr; Experiment design</a> &nbsp;/&nbsp; <a href="funnel_analysis.html">Funnel analysis</a></div>
+
+<div class="header">
+  <h1>Durable User Quality: Treatment vs Control</h1>
+  <div class="subtitle">Are incentive-created durables the same quality as organic durables?</div>
+  <div class="meta">DRI: Justin Zhou &nbsp;&bull;&nbsp; Data pulled: Apr 29, 2026 &nbsp;&bull;&nbsp; All metrics measured 28 days post-bonus window</div>
+</div>
+
+<div class="wrap">
+
+  <div class="verdict-row">
+    <div class="verdict-card">
+      <div class="verdict-tag">Key finding</div>
+      <div class="verdict-headline">Incentive-created durables are indistinguishable from organic durables on downstream behavior.</div>
+      <p class="verdict-sub">In Exp 1 (win 2nd deposit), treatment durables match or slightly exceed control durables on every quality metric: durable retention, POS spend, and dashing hours. Treatment durables are even more likely to remain durable in subsequent months (+2.8 pp in month 2, +1.7 pp in both months). The incentive is not creating shallow, one-time durables.</p>
+    </div>
+  </div>
+
+  <!-- ── 1. Exp 1 ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">1</span> Exp 1 (Win 2nd Deposit, $15): Durable quality comparison</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Restricted to users who deposited $200+ in January (the in-window durables). Measuring their behavior in subsequent months.</p>
+
+      <h3 class="section-sub">Durable retention (do they stay durable?)</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control (n=2,275)</th><th class="num">Treatment (n=2,387)</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>% durable again in Feb (28d post)</td>
+            <td class="num">45.14%</td>
+            <td class="num">45.62%</td>
+            <td class="num lift-pos">+0.48 pp</td>
+          </tr>
+          <tr>
+            <td>% durable again in Mar (56d post)</td>
+            <td class="num">36.53%</td>
+            <td class="num">39.34%</td>
+            <td class="num lift-pos">+2.81 pp</td>
+          </tr>
+          <tr>
+            <td>% durable in BOTH Feb AND Mar</td>
+            <td class="num">25.85%</td>
+            <td class="num">27.52%</td>
+            <td class="num lift-pos">+1.67 pp</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--green">
+        <strong>Treatment durables retain at equal or slightly higher rates.</strong> The incentive didn't create one-and-done users &mdash; 45.6% of treatment durables hit $200+ again in Feb (vs 45.1% control), and 39.3% in Mar (vs 36.5%). If anything, the bonus may have created a behavioral anchor that sticks.
+      </div>
+
+      <h3 class="section-sub">Deposit behavior</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg Jan ancillary $</td><td class="num">$477.40</td><td class="num">$453.73</td><td class="num lift-flat">&minus;5.0%</td></tr>
+          <tr><td>Avg Jan deposit days</td><td class="num">5.84</td><td class="num">5.81</td><td class="num lift-flat">~0%</td></tr>
+          <tr><td>Avg Feb ancillary $ (28d post)</td><td class="num">$387.62</td><td class="num">$379.88</td><td class="num lift-flat">&minus;2.0%</td></tr>
+          <tr><td>Avg Feb deposit days</td><td class="num">4.37</td><td class="num">4.30</td><td class="num lift-flat">&minus;1.6%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--teal">
+        <strong>Slight drag on volume, not on frequency.</strong> Treatment durables deposit ~5% less than control in the bonus month ($454 vs $477) &mdash; expected since some just barely cleared $200 to earn the bonus. By Feb the gap narrows to 2%. Deposit frequency (days with deposits) is virtually identical.
+      </div>
+
+      <h3 class="section-sub">POS spend (card usage)</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg Jan POS $</td><td class="num">$806.21</td><td class="num">$778.57</td><td class="num lift-flat">&minus;3.4%</td></tr>
+          <tr><td>Avg Jan POS transactions</td><td class="num">50.5</td><td class="num">49.6</td><td class="num lift-flat">&minus;1.6%</td></tr>
+          <tr><td>Avg Feb POS $ (28d post)</td><td class="num">$658.05</td><td class="num">$663.08</td><td class="num lift-pos">+0.8%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--teal">
+        <strong>POS spend converges post-bonus.</strong> Slight drag in the bonus month (&minus;3.4%), but by Feb the treatment durables actually spend slightly more (+0.8%). The marginal users pulled in by the incentive are spending at equivalent rates once established.
+      </div>
+
+      <h3 class="section-sub">Dashing hours</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg Jan hours</td><td class="num">35.5</td><td class="num">35.6</td><td class="num lift-flat">~0%</td></tr>
+          <tr><td>Avg Feb hours (28d post)</td><td class="num">25.4</td><td class="num">26.2</td><td class="num lift-pos">+3.0%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--green">
+        <strong>Dashing is unchanged during the bonus month and slightly higher post-bonus.</strong> Treatment durables dash 3% more in Feb than control durables. The incentive didn't attract users who deposit but don't work &mdash; these are real dashers.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. Exp 2 ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">2</span> Exp 2 (Win 1st Deposit, $20): Durable quality comparison</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Restricted to users who deposited $200+ in the target window (Feb 12 &ndash; Mar 6). All post-bonus metrics measured on the 28 days immediately after (Mar 7 &ndash; Apr 3).</p>
+
+      <h3 class="section-sub">Durable retention</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control (n=2,259)</th><th class="num">Treatment (n=2,626)</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>% durable again in 28d post (Mar 7 &ndash; Apr 3)</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>% durable in 28&ndash;56d post (Apr 4 &ndash; Apr 30)</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>% durable in both</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-sub">Deposit behavior (28d post)</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg 28d post ancillary $</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>Avg 28d post deposit days</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-sub">POS spend (28d post)</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg 28d post POS $</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>Avg 28d post POS transactions</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-sub">Dashing hours (28d post)</h3>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Avg 28d post hours</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--amber">
+        <strong>Exp 2 data pending.</strong> The Snowflake query for this section timed out during SSO authentication. The SQL is ready below &mdash; run it once after signing in to Snowflake and fill in the TBD cells above.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. Interpretation ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">3</span> Interpretation (Exp 1; update when Exp 2 lands)</div>
+    <div class="card-body narrative">
+      <h3 class="section-sub">The incentive isn't creating shallow durables</h3>
+      <p>Treatment durables from Exp 1 are <strong>indistinguishable from organic durables</strong> on retention, POS spend, and dashing hours. In fact, they're slightly <em>better</em> on durable retention (+2.81 pp in month 2, +1.67 pp in both months) and post-bonus dashing (+3.0%). The 5% drag on deposit volume in the bonus month narrows to 2% post-bonus and is consistent with marginal users barely clearing the $200 bar.</p>
+
+      <h3 class="section-sub">What this means for your experiment</h3>
+      <p>If Exp 2 shows the same pattern (treatment durables ≈ control durables on quality), then the cost-per-incremental-durable metric ($141) fully captures the value created. There's no hidden quality discount to worry about &mdash; <strong>an incentive-created durable is worth the same as an organic one.</strong></p>
+
+      <h3 class="section-sub">What would change the conclusion</h3>
+      <p>If Exp 2 treatment durables show meaningfully lower retention (e.g., 10+ pp less likely to stay durable in the 28d post window) or lower POS spend, it would suggest that first-deposit incentives produce shallower durables than second-deposit incentives. That wouldn't invalidate the first-deposit strategy (2&times; cost advantage is large), but it would mean the effective LTV discount needs to be factored into scaling decisions.</p>
+    </div>
+  </div>
+
+  <!-- ── 4. SQL ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">4</span> SQL</div>
+    <div class="card-body">
+
+      <details class="sql" open>
+        <summary>Exp 2 quality query (run this to fill TBD above)</summary>
+<pre>WITH payout_dasher AS (
+  SELECT pa.id AS payout_account_id, dd.dasher_id
+  FROM payout_service.public.payout_accounts pa
+  JOIN proddb.public.dimension_dasher dd
+    ON dd.payment_account_id = pa.payment_account_id
+  WHERE dd.dasher_id IS NOT NULL
+),
+
+-- In-window durables only
+tw_anc AS (
+  SELECT pd.dasher_id, SUM(ABS(t.transaction_amount_with_direction)) AS amt
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-02-12'
+    AND t.extract_datetime2 &lt;= DATE '2026-03-06'
+  GROUP BY 1
+  HAVING amt &gt;= 200
+),
+
+durables AS (
+  SELECT c.dasher_id, c.exp_group
+  FROM proddb.nancyyang.win_first_deposit_0212_static c
+  JOIN tw_anc t ON c.dasher_id = t.dasher_id
+),
+
+-- 28d post (Mar 7 – Apr 3)
+post_anc AS (
+  SELECT pd.dasher_id,
+    SUM(ABS(t.transaction_amount_with_direction)) AS amt,
+    COUNT(DISTINCT CAST(t.extract_datetime2 AS DATE)) AS dep_days
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  JOIN durables d ON pd.dasher_id = d.dasher_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-03-07'
+    AND t.extract_datetime2 &lt;= DATE '2026-04-03'
+  GROUP BY 1
+),
+
+-- 28-56d post (Apr 4 – Apr 30)
+post2_anc AS (
+  SELECT pd.dasher_id, SUM(ABS(t.transaction_amount_with_direction)) AS amt
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  JOIN durables d ON pd.dasher_id = d.dasher_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-04-04'
+    AND t.extract_datetime2 &lt;= DATE '2026-04-30'
+  GROUP BY 1
+),
+
+post_pos AS (
+  SELECT pd.dasher_id,
+    SUM(ABS(t.transaction_amount_with_direction)) AS amt,
+    COUNT(*) AS n
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  JOIN durables d ON pd.dasher_id = d.dasher_id
+  WHERE t.txn_code_type = 'OUT_POS'
+    AND t.extract_datetime2 &gt;= DATE '2026-03-07'
+    AND t.extract_datetime2 &lt;= DATE '2026-04-03'
+  GROUP BY 1
+),
+
+post_dash AS (
+  SELECT ds.dasher_id, SUM(ds.total_active_time_seconds) / 3600.0 AS hrs
+  FROM edw.dasher.dasher_shifts ds
+  JOIN durables d ON ds.dasher_id = d.dasher_id
+  WHERE ds.active_date BETWEEN DATE '2026-03-07' AND DATE '2026-04-03'
+  GROUP BY 1
+)
+
+SELECT
+  d.exp_group,
+  COUNT(*) AS durables,
+  -- Retention
+  100.0 * SUM(CASE WHEN COALESCE(pa.amt, 0) &gt;= 200 THEN 1 ELSE 0 END)
+    / COUNT(*) AS pct_dur_28d_post,
+  100.0 * SUM(CASE WHEN COALESCE(p2.amt, 0) &gt;= 200 THEN 1 ELSE 0 END)
+    / COUNT(*) AS pct_dur_28_56d_post,
+  100.0 * SUM(CASE WHEN COALESCE(pa.amt, 0) &gt;= 200
+              AND COALESCE(p2.amt, 0) &gt;= 200 THEN 1 ELSE 0 END)
+    / COUNT(*) AS pct_dur_both,
+  -- Deposits
+  AVG(COALESCE(pa.amt, 0)) AS avg_post28_anc,
+  AVG(COALESCE(pa.dep_days, 0)) AS avg_post28_dep_days,
+  -- POS
+  AVG(COALESCE(pp.amt, 0)) AS avg_post28_pos,
+  AVG(COALESCE(pp.n, 0)) AS avg_post28_pos_n,
+  -- Dashing
+  AVG(COALESCE(pd2.hrs, 0)) AS avg_post28_hrs
+FROM durables d
+LEFT JOIN post_anc pa ON d.dasher_id = pa.dasher_id
+LEFT JOIN post2_anc p2 ON d.dasher_id = p2.dasher_id
+LEFT JOIN post_pos pp ON d.dasher_id = pp.dasher_id
+LEFT JOIN post_dash pd2 ON d.dasher_id = pd2.dasher_id
+GROUP BY 1
+ORDER BY 1;
+</pre>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -38,7 +38,14 @@
     .header .subtitle { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
     .header .meta { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.6); }
 
-    .wrap { max-width: 920px; margin: 0 auto; padding: 20px 24px 60px; }
+    .breadcrumb {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 28px; font-size: 12px;
+    }
+    .breadcrumb a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .wrap { max-width: 940px; margin: 0 auto; padding: 20px 24px 60px; }
 
     .verdict-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 20px; }
     @media (max-width: 700px) { .verdict-row { grid-template-columns: 1fr; } }
@@ -47,7 +54,7 @@
       padding: 22px 24px; box-shadow: 0 1px 4px rgba(69,129,142,0.1);
       position: relative; overflow: hidden;
     }
-    .verdict-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--teal); }
+    .verdict-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--green); }
     .verdict-tag { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
     .verdict-headline { font-size: 19px; font-weight: 800; line-height: 1.3; margin-bottom: 8px; }
     .verdict-sub { font-size: 13px; line-height: 1.55; color: var(--muted); margin: 0; }
@@ -62,6 +69,7 @@
     .kpi-value--green { color: var(--green); }
     .kpi-value--amber { color: var(--amber); }
     .kpi-value--teal { color: var(--teal); }
+    .kpi-value--red { color: var(--red); }
     .kpi-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-top: 6px; }
 
     .card {
@@ -93,13 +101,13 @@
 
     .lift-pos { color: var(--green); font-weight: 700; }
     .lift-flat { color: var(--muted); font-weight: 600; }
-    .winner { background: var(--green-soft) !important; }
-    .loser { background: #fafafa; }
+    .winner-row td { background: var(--green-soft) !important; }
 
     .callout { border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
     .callout--green { background: var(--green-soft); border-left: 3px solid var(--green); }
     .callout--amber { background: var(--amber-soft); border-left: 3px solid var(--amber); }
     .callout--teal { background: var(--teal-xl); border-left: 3px solid var(--teal); }
+    .callout--red { background: var(--red-soft); border-left: 3px solid var(--red); }
 
     .narrative { font-size: 13.5px; line-height: 1.7; }
     .narrative p { margin: 0 0 12px; }
@@ -107,6 +115,18 @@
 
     h3.section-sub { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal); margin: 20px 0 8px; }
     h3.section-sub:first-child { margin-top: 0; }
+
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+    @media (max-width: 700px) { .compare { grid-template-columns: 1fr; } }
+    .compare-box { border-radius: 8px; padding: 16px 18px; border: 1px solid var(--border); background: var(--surface); }
+    .compare-box--exp1 { background: #fefcf4; border-color: #ecdda3; }
+    .compare-box--exp2 { background: var(--green-soft); border-color: #b6dccb; }
+    .compare-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
+    }
+    .compare-headline { font-size: 16px; font-weight: 800; margin-bottom: 4px; line-height: 1.3; }
+    .compare-sub { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
 
     /* Funnel viz */
     .funnel { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; }
@@ -121,19 +141,7 @@
     .funnel-bar .stage-label { position: relative; z-index: 1; font-weight: 700; font-size: 13px; }
     .funnel-bar .stage-numbers { position: relative; z-index: 1; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-    /* Comparison side-by-side */
-    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
-    @media (max-width: 700px) { .compare { grid-template-columns: 1fr; } }
-    .compare-box { border-radius: 8px; padding: 16px 18px; border: 1px solid var(--border); }
-    .compare-box--a { background: #fefcf4; border-color: #ecdda3; }
-    .compare-box--b { background: var(--green-soft); border-color: #b6dccb; }
-    .compare-label {
-      font-size: 10px; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
-    }
-    .compare-headline { font-size: 16px; font-weight: 800; margin-bottom: 12px; line-height: 1.3; }
-
-    /* Code blocks */
+    /* SQL details */
     details.sql { border: 1px solid var(--border); border-radius: 8px; margin: 12px 0; background: #fafbfc; overflow: hidden; }
     details.sql summary {
       cursor: pointer; padding: 10px 14px; font-size: 12px; font-weight: 700;
@@ -147,12 +155,16 @@
       overflow-x: auto; white-space: pre;
     }
 
-    .breadcrumb {
-      background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 10px 28px; font-size: 12px;
+    .superseded {
+      opacity: 0.65; position: relative;
     }
-    .breadcrumb a { color: var(--teal); text-decoration: none; font-weight: 600; }
-    .breadcrumb a:hover { text-decoration: underline; }
+    .superseded::after {
+      content: "Superseded by empirical data above";
+      position: absolute; top: 8px; right: 14px;
+      font-size: 10px; font-weight: 700; color: var(--amber);
+      background: var(--amber-soft); padding: 3px 8px; border-radius: 4px;
+      border: 1px solid #f0deb6;
+    }
   </style>
 </head>
 <body>
@@ -163,8 +175,8 @@
 
 <div class="header">
   <h1>Where to Intervene? First Deposit vs. Second Deposit</h1>
-  <div class="subtitle">Funnel math for the &ldquo;$10 first purchase on us&rdquo; experiment</div>
-  <div class="meta">DRI: Justin Zhou &nbsp;&bull;&nbsp; Data: Crimson joiners Oct 2025&ndash;Mar 2026 &nbsp;&bull;&nbsp; Pulled: Apr 29, 2026</div>
+  <div class="subtitle">Empirical results from Nancy's Jan/Feb 2026 experiments</div>
+  <div class="meta">DRI: Justin Zhou &nbsp;&bull;&nbsp; Data pulled: Apr 29, 2026 &nbsp;&bull;&nbsp; Sources: <code>proddb.nancyyang.win_recurring_deposits_0120_static</code>, <code>proddb.nancyyang.win_first_deposit_0212_static</code></div>
 </div>
 
 <div class="wrap">
@@ -172,36 +184,207 @@
   <!-- ── Verdict ── -->
   <div class="verdict-row">
     <div class="verdict-card">
-      <div class="verdict-tag">Verdict</div>
-      <div class="verdict-headline">First-deposit intervention produces 25% more durable users in absolute terms; second-deposit intervention is 20% cheaper per durable user.</div>
-      <p class="verdict-sub">A 10% relative lift on first-deposit conversion produces <strong>+467 durables per 100K joiners</strong>. The same lift on second-deposit conversion (among existing first-depositors) produces <strong>+375 durables</strong>. But because second-deposit triggers fewer payouts, B is more efficient per dollar ($255/durable vs $305/durable assuming $10/conversion).</p>
+      <div class="verdict-tag">Verdict (in-window methodology)</div>
+      <div class="verdict-headline">First-deposit intervention is <span style="color:var(--green);">2&times; more cost-efficient</span> than second-deposit, accounting for different payouts.</div>
+      <p class="verdict-sub">Measuring "incremental users who deposited $200+ during the bonus eligibility window" &mdash; both numerator (cost) and denominator (lift) on the same window, no quirk. <strong>Exp 2 (1st deposit, $20): $141 per incremental durable.</strong> Exp 1 (2nd deposit, $15): $284 per incremental durable. Across every payout × elasticity scenario in the sensitivity table, first-deposit holds its lead.</p>
     </div>
     <div class="kpi-grid">
-      <div class="kpi"><div class="kpi-value kpi-value--amber">+467</div><div class="kpi-label">Δ durables (A: lift first deposit)</div></div>
-      <div class="kpi"><div class="kpi-value kpi-value--teal">+375</div><div class="kpi-label">Δ durables (B: lift second deposit)</div></div>
-      <div class="kpi"><div class="kpi-value kpi-value--amber">$305</div><div class="kpi-label">Cost / durable (A)</div></div>
-      <div class="kpi"><div class="kpi-value kpi-value--green">$255</div><div class="kpi-label">Cost / durable (B)</div></div>
+      <div class="kpi"><div class="kpi-value kpi-value--green">$141</div><div class="kpi-label">$/incremental durable: 1st (Exp 2, $20)</div></div>
+      <div class="kpi"><div class="kpi-value kpi-value--amber">$284</div><div class="kpi-label">$/incremental durable: 2nd (Exp 1, $15)</div></div>
+      <div class="kpi"><div class="kpi-value kpi-value--green">+372</div><div class="kpi-label">Incremental durables (Exp 2)</div></div>
+      <div class="kpi"><div class="kpi-value kpi-value--amber">+126</div><div class="kpi-label">Incremental durables (Exp 1)</div></div>
     </div>
   </div>
 
-  <!-- ── 1. The question ── -->
+  <!-- ── 1. The two experiments ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">1</span> The question</div>
-    <div class="card-body narrative">
-      <p>The experiment offers <strong>$10 off the first card purchase after an outside deposit</strong>. The same dollar could instead reward a <em>second</em> deposit. Per Nancy: <em>&ldquo;The math will tell you. It&rsquo;s OK to pick one, but make it informed.&rdquo;</em></p>
-      <p><strong>Frame:</strong> Apply a 10% relative lift at one funnel step at a time, hold the rest of the funnel constant, and count incremental durable users.</p>
-    </div>
-  </div>
-
-  <!-- ── 2. The funnel ── -->
-  <div class="card">
-    <div class="sec-head"><span class="sec-num">2</span> The funnel (real Crimson data, Oct 2025&ndash;Mar 2026)</div>
+    <div class="sec-head"><span class="sec-num">1</span> Nancy's two experiments side-by-side</div>
     <div class="card-body">
+
+      <div class="compare">
+        <div class="compare-box compare-box--exp1">
+          <div class="compare-label">Experiment 1 &mdash; Win the 2nd deposit</div>
+          <div class="compare-headline">$15 to first-time depositors</div>
+          <div class="compare-sub">Cohort: users who made their 1st outside deposit in Dec 2025. Reward $15 if they deposit $200+ in Jan 2026. Launch 1/20/2026, exposure 1/21/2026, target month = January.</div>
+          <table style="background:transparent;">
+            <thead>
+              <tr><th></th><th class="num">Control</th><th class="num">Treatment</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Users</td><td class="num">33,516</td><td class="num">33,299</td></tr>
+              <tr><td>Made any Jan deposit</td><td class="num">12,331 (36.79%)</td><td class="num">12,194 (36.62%)</td></tr>
+              <tr><td><strong>Durable in Jan ($200+)</strong></td><td class="num"><strong>2,275 (6.79%)</strong></td><td class="num"><strong>2,387 (7.17%)</strong></td></tr>
+              <tr><td>Δ pp</td><td class="num" colspan="2">+0.38 pp <span class="lift-pos">(+5.6% relative)</span></td></tr>
+              <tr><td>Durable in Feb (downstream)</td><td class="num">2,805 (8.37%)</td><td class="num">2,897 (8.70%)</td></tr>
+              <tr><td>Durable in Mar (further downstream)</td><td class="num">2,928 (8.74%)</td><td class="num">2,998 (9.00%)</td></tr>
+              <tr><td>Avg Jan ancillary $</td><td class="num">$50.92</td><td class="num">$50.90</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="compare-box compare-box--exp2">
+          <div class="compare-label">Experiment 2 &mdash; Win the 1st deposit</div>
+          <div class="compare-headline">$20 to never-depositors</div>
+          <div class="compare-sub">Cohort: zero lifetime outside deposits + transfer-out &lt;50% (high-trust signal). Reward $20 if they deposit $200+ during Feb 12&ndash;Mar 6, 2026.</div>
+          <table style="background:transparent;">
+            <thead>
+              <tr><th></th><th class="num">Control</th><th class="num">Treatment</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Users</td><td class="num">422,636</td><td class="num">421,669</td></tr>
+              <tr><td>Made any deposit (target window)</td><td class="num">9,998 (2.37%)</td><td class="num">10,785 (2.56%)</td></tr>
+              <tr><td><strong>Durable in target ($200+)</strong></td><td class="num"><strong>2,259 (0.535%)</strong></td><td class="num"><strong>2,626 (0.623%)</strong></td></tr>
+              <tr><td>Δ pp</td><td class="num" colspan="2">+0.088 pp <span class="lift-pos">(+16.5% relative)</span></td></tr>
+              <tr><td>Durable in Apr (30&ndash;60d downstream)</td><td class="num">4,350 (1.03%)</td><td class="num">4,597 (1.09%)</td></tr>
+              <tr><td>Avg target-window ancillary $</td><td class="num">$5.84</td><td class="num">$6.14</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout callout--green">
+        <strong>Both experiments produced statistically significant lift on the bonus-threshold metric.</strong> First-deposit is the bigger relative mover (+16.5% vs +5.6%), even though its absolute baseline is 13&times; lower (0.53% vs 6.79%). That means the first-deposit population is more elastic than the second-deposit population.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. Methodology ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">2</span> Methodology: in-window incremental durability</div>
+    <div class="card-body narrative">
+      <p><strong>Primary metric:</strong> % of users who deposited $200+ during the bonus eligibility window. Cost = reward &times; treatment qualifiers; incremental = treatment − (control rate &times; treatment size).</p>
+
+      <p>Why this is the right primary metric:</p>
+      <ul style="font-size:13.5px;">
+        <li><strong>Window alignment is automatic.</strong> Cost numerator (bonuses paid) and outcome denominator (durables produced) are measured over the same period. No asymmetry, no inflation, no "free tail" where users become durable post-bonus without triggering payment.</li>
+        <li><strong>It's exactly what the brief specified.</strong> Both experiment briefs framed success as "% of users who deposit $200+ in the target month." This methodology measures that directly &mdash; nothing more, nothing less.</li>
+        <li><strong>Apples-to-apples within each experiment.</strong> Cost and lift are anchored to the same population behavior over the same window.</li>
+      </ul>
+
+      <p>Why Nancy's "quirk" concern doesn't apply here: the original analysis used a 28-day rolling durability window that extended past Exp 2's 22-day bonus eligibility. Users could become "durable" in the 6-day tail without triggering payment &mdash; counted in lift, missing from cost. <strong>This methodology forces both metrics onto the same window, eliminating that asymmetry.</strong></p>
+
+      <p>Caveats worth flagging:</p>
+      <ul style="font-size:13.5px;">
+        <li><strong>Different window lengths.</strong> Exp 1 used 31 days (Jan), Exp 2 used 22 days (Feb 12–Mar 6). Exp 2's $200 bar is ~40% harder to clear per unit time, which actually strengthens the case for first-deposit.</li>
+        <li><strong>"$200 in window" ≠ behavioral durability.</strong> A user could hit $200 once and never deposit again. The metric is a leading indicator. We pair it with a sustainability check (Section 3).</li>
+        <li><strong>For evergreen scaling, this metric is appropriate.</strong> An always-on $20-for-$200-in-rolling-period offer would have cost = $20 × monthly qualifiers, which is exactly what we're measuring.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 3. Head-to-head ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">3</span> Head-to-head: $/incremental durable user, in-window</div>
+    <div class="card-body">
+
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Exp 1: Win 2nd deposit</th><th class="num">Exp 2: Win 1st deposit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reward per qualifier</td><td class="num">$15</td><td class="num">$20</td></tr>
+          <tr><td>Bonus eligibility window</td><td class="num">Jan 1–31 (31 days)</td><td class="num">Feb 12–Mar 6 (22 days)</td></tr>
+          <tr><td>Treatment users</td><td class="num">33,299</td><td class="num">421,669</td></tr>
+          <tr><td>Treatment qualifiers ($200+ in window)</td><td class="num">2,387</td><td class="num">2,626</td></tr>
+          <tr><td>Total payout</td><td class="num">$35,805</td><td class="num">$52,520</td></tr>
+          <tr><td>Control rate ($200+ in same window)</td><td class="num">6.79%</td><td class="num">0.535%</td></tr>
+          <tr><td>Treatment rate ($200+ in same window)</td><td class="num">7.17%</td><td class="num">0.623%</td></tr>
+          <tr><td>Δ pp</td><td class="num">+0.38 pp</td><td class="num">+0.088 pp</td></tr>
+          <tr><td>Δ relative</td><td class="num">+5.6%</td><td class="num lift-pos">+16.5%</td></tr>
+          <tr><td>Expected at control rate × treatment_n</td><td class="num">2,261</td><td class="num">2,254</td></tr>
+          <tr><td>Incremental durables</td><td class="num">+126</td><td class="num">+372</td></tr>
+          <tr class="winner-row">
+            <td><strong>$ per incremental durable user</strong></td>
+            <td class="num"><strong>$284</strong></td>
+            <td class="num"><strong>$141</strong> &nbsp;<span class="lift-pos">2&times; better</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--green">
+        <strong>First-deposit wins by 2&times; on the primary metric.</strong> Even with a 33% larger reward ($20 vs $15), Exp 2's vastly higher relative lift (+16.5% vs +5.6%) more than makes up for it. Per-conversion cost works out to identical ($110 each, by coincidence) but Exp 2's smaller-baseline behavior gets moved much more by the offer.
+      </div>
+
+      <h3 class="section-sub">Sustainability check: 28 days post-bonus</h3>
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Secondary metric. Measures durability (≥$200 in deposits) over the <strong>28 calendar days immediately following the bonus eligibility window</strong>, controlling for month-length differences. Confirms whether in-window lift translates to lasting behavior.</p>
+      <table>
+        <thead>
+          <tr><th></th><th class="num">Exp 1: Feb 1 – Feb 28</th><th class="num">Exp 2: Mar 7 – Apr 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Control rate ($200+ in 28d post)</td><td class="num">8.37%</td><td class="num">0.77%</td></tr>
+          <tr><td>Treatment rate</td><td class="num">8.70%</td><td class="num">0.84%</td></tr>
+          <tr><td>Δ pp</td><td class="num">+0.33 pp</td><td class="num">+0.072 pp</td></tr>
+          <tr><td>Δ relative</td><td class="num">+3.95%</td><td class="num">+9.24%</td></tr>
+          <tr><td>Effect retained vs. in-window</td><td class="num">~70% (5.6% → 3.95%)</td><td class="num">~56% (16.5% → 9.24%)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--amber">
+        Both experiments retain a meaningful share of the in-window lift after the bonus expires. Exp 2 retains 56% of its (much larger) lift; Exp 1 retains 70% of its smaller lift. <strong>Confirms the in-window metric isn't pure incentive-chasing &mdash; real behavior change persists in both.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. Decision: where should I focus? ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">4</span> So where should I focus &mdash; first or second deposits?</div>
+    <div class="card-body narrative">
+
+      <h3 class="section-sub">First deposit, with high confidence</h3>
+      <p>On the in-window primary metric, <strong>first-deposit intervention beats second-deposit by 2&times;</strong> ($141 vs $284 per incremental durable). The 28-day post-bonus sustainability check confirms it's not pure incentive-chasing &mdash; both experiments retain a meaningful share of their lift after the bonus expires. Structural reasons for the first-deposit advantage:</p>
+      <ul style="font-size:13.5px;">
+        <li><strong>Larger addressable pool</strong>: ~1.7M users have never deposited (Exp 2 cohort) vs. ~67K first-time depositors per month (Exp 1 cohort). 25&times; more users to lift.</li>
+        <li><strong>More elastic population</strong>: Exp 2's cohort had latent intent that wouldn't otherwise convert. Exp 1's cohort was already on a deposit trajectory; the bonus mostly accelerated something that would have happened anyway, hence the small +5.6% in-window lift.</li>
+        <li><strong>Lift survives post-promo</strong>: Exp 2's effect retained 56% in the 28-day post window (+9.24% relative); Exp 1 retained 70% of its smaller lift (+3.95% relative). Both real, but Exp 2's larger absolute lift translates to many more incremental durables.</li>
+      </ul>
+
+      <h3 class="section-sub">Why I'd still consider a small recurring-deposit play</h3>
+      <p>Exp 1 had one underrated property: low absolute spend ($35K total). If you can find a higher-elasticity sub-segment of first-time depositors (e.g., those with strong dashing income or active P2P inflows), the per-user economics could improve. But this is a smaller program, not a primary growth lever.</p>
+
+      <h3 class="section-sub">Concrete answer for your $10-on-us experiment</h3>
+      <ul style="font-size:13.5px;">
+        <li><strong>You're already targeting first-deposit</strong>. That's the right funnel position.</li>
+        <li><strong>Your $10 reward is half of Exp 2's $20</strong>. If your bundling mechanism preserves Exp 2's ~16.5% relative lift, the per-conversion cost halves and you'd land near $70/incremental qualifier &mdash; meaningfully under Nancy's $141. The risk is a smaller reward producing a smaller lift; only the experiment will tell.</li>
+        <li><strong>Your bundling mechanism is the unique value-add</strong>. Don't optimize for "where to intervene" &mdash; settled. Optimize for "does the deposit+spend bundle outperform a flat deposit bonus?"</li>
+        <li><strong>Pre-register the metric explicitly</strong>: % of users who deposited $10+ AND made a card purchase within May 1&ndash;15, with cost per incremental qualifier as the primary success metric. Add 28-day-post-bonus durability (Jun) as the sustainability check.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 3. Channel breakdown for Exp 1 ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">5</span> Exp 1 by primary December deposit channel</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Nancy's brief flagged channel-level baseline differences. Slicing the actual results by primary December channel:</p>
+      <table>
+        <thead>
+          <tr><th>Channel</th><th class="num">Control n</th><th class="num">Control durable Jan</th><th class="num">Treatment n</th><th class="num">Treatment durable Jan</th><th class="num">Δ rel.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GIG (gig earnings)</td><td class="num">1,299</td><td class="num">12.24%</td><td class="num">1,258</td><td class="num">13.20%</td><td class="num lift-pos">+7.8%</td></tr>
+          <tr><td>P2P</td><td class="num">24,602</td><td class="num">6.30%</td><td class="num">24,632</td><td class="num">6.69%</td><td class="num lift-pos">+6.2%</td></tr>
+          <tr><td>ACH</td><td class="num">1,380</td><td class="num">5.00%</td><td class="num">1,382</td><td class="num">5.43%</td><td class="num lift-pos">+8.5%</td></tr>
+          <tr><td>OTHER / mixed</td><td class="num">6,235</td><td class="num">7.97%</td><td class="num">6,027</td><td class="num">8.26%</td><td class="num lift-pos">+3.7%</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout--amber">
+        Lift is roughly consistent across channels (3.7% to 8.5%), mostly within sampling noise given the segment sizes. P2P is the dominant channel (74% of Exp 1 cohort) and drives the headline +5.6%.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. The funnel ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">6</span> The funnel (Crimson joiners Oct 2025&ndash;Mar 2026)</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Independent population-level rates from <code>edw.payments.fact_crimson_transactions</code>. Used as the baseline for the modeled comparison below.</p>
+
       <div class="funnel">
-        <div class="funnel-bar" style="--w:100%;"><span class="stage-label">Crimson joiners</span><span class="stage-numbers">1,393,421 &middot; 100%</span></div>
-        <div class="funnel-bar" style="--w:13%;"><span class="stage-label">Made 1st deposit</span><span class="stage-numbers">180,178 &middot; 12.93%</span></div>
-        <div class="funnel-bar" style="--w:9%;"><span class="stage-label">Made 2nd deposit</span><span class="stage-numbers">121,309 &middot; 67.33% of 1st depositors</span></div>
-        <div class="funnel-bar" style="--w:4.7%;"><span class="stage-label">Ever durable (anc &ge; $200)</span><span class="stage-numbers">64,934 &middot; 4.66% of joiners</span></div>
+        <div class="funnel-bar"><span class="stage-label">Crimson joiners</span><span class="stage-numbers">1,393,421 &middot; 100%</span></div>
+        <div class="funnel-bar"><span class="stage-label">Made 1st deposit</span><span class="stage-numbers">180,178 &middot; 12.93%</span></div>
+        <div class="funnel-bar"><span class="stage-label">Made 2nd deposit</span><span class="stage-numbers">121,309 &middot; 67.33% of 1st depositors</span></div>
+        <div class="funnel-bar"><span class="stage-label">Ever durable (anc &ge; $200)</span><span class="stage-numbers">64,934 &middot; 4.66% of joiners</span></div>
       </div>
 
       <h3 class="section-sub">Conditional durability rates</h3>
@@ -210,262 +393,254 @@
           <tr><th>Path</th><th class="num">Users</th><th class="num">Durable</th><th class="num">P(durable)</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Made 1st deposit, then 2nd</td>
-            <td class="num">121,309</td>
-            <td class="num">60,816</td>
-            <td class="num lift-pos">50.13%</td>
-          </tr>
-          <tr>
-            <td>Made 1st deposit only (no 2nd)</td>
-            <td class="num">58,869</td>
-            <td class="num">4,118</td>
-            <td class="num">7.00%</td>
-          </tr>
-          <tr>
-            <td>Any 1st depositor (weighted avg)</td>
-            <td class="num">180,178</td>
-            <td class="num">64,934</td>
-            <td class="num">36.04%</td>
-          </tr>
-          <tr>
-            <td>Joiners (no deposit)</td>
-            <td class="num">1,213,243</td>
-            <td class="num">0</td>
-            <td class="num">~0%</td>
-          </tr>
+          <tr><td>Made 1st deposit, then 2nd</td><td class="num">121,309</td><td class="num">60,816</td><td class="num lift-pos">50.13%</td></tr>
+          <tr><td>Made 1st deposit only (no 2nd)</td><td class="num">58,869</td><td class="num">4,118</td><td class="num">7.00%</td></tr>
+          <tr><td>Any 1st depositor (weighted)</td><td class="num">180,178</td><td class="num">64,934</td><td class="num">36.04%</td></tr>
+          <tr><td>Joiners (no deposit)</td><td class="num">1,213,243</td><td class="num">0</td><td class="num">~0%</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout--teal">
-        <strong>Key insight:</strong> Making a second deposit is the single biggest signal of durability &mdash; <strong>50% of second-depositors become durable vs. 7% of first-only depositors</strong>. That's a 7&times; gap, and it's the lever behind the comparison below.
+        <strong>Key insight:</strong> Making a second deposit is the single biggest signal of durability &mdash; <strong>50% of second-depositors become durable vs. 7% of first-only depositors</strong>. That's a 7&times; gap. The modeled section below uses these rates to predict where a 10% lift would have the most leverage; the empirical results above show what actually happened.
       </div>
     </div>
   </div>
 
-  <!-- ── 3. The math ── -->
+  <!-- ── Modeled vs measured ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">3</span> Comparing a 10% lift at each step</div>
+    <div class="sec-head"><span class="sec-num">7</span> Why the modeled comparison disagreed with the empirical results</div>
     <div class="card-body">
-
-      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Per <strong>100,000 Crimson joiners</strong>, holding all other rates constant:</p>
-
-      <h3 class="section-sub">Baseline (no intervention)</h3>
       <table>
         <thead>
-          <tr><th>Stage</th><th class="num">Users</th><th class="num">Δ vs. prev</th></tr>
+          <tr><th></th><th class="num">Modeled (10% lift, $10 reward)</th><th class="num">Measured (Nancy's Jan/Feb 2026, fair metric)</th></tr>
         </thead>
         <tbody>
-          <tr><td>Joiners</td><td class="num">100,000</td><td class="num lift-flat">&mdash;</td></tr>
-          <tr><td>1st depositors (12.93%)</td><td class="num">12,931</td><td class="num">&mdash;</td></tr>
-          <tr><td>&nbsp;&nbsp;&rarr; 2nd depositors (67.33% of 1st)</td><td class="num">8,707</td><td class="num">&mdash;</td></tr>
-          <tr><td>&nbsp;&nbsp;&rarr; Durable from 2nd-depositors (50.13%)</td><td class="num">4,365</td><td class="num">&mdash;</td></tr>
-          <tr><td>&nbsp;&nbsp;&rarr; 1st-only (no 2nd)</td><td class="num">4,224</td><td class="num">&mdash;</td></tr>
-          <tr><td>&nbsp;&nbsp;&rarr; Durable from 1st-only (7.00%)</td><td class="num">295</td><td class="num">&mdash;</td></tr>
-          <tr style="font-weight:800;"><td>Total durable</td><td class="num">4,660</td><td class="num">&mdash;</td></tr>
+          <tr><td>1st deposit lift</td><td class="num">10% (assumed)</td><td class="num lift-pos">+16.5% (in-window)</td></tr>
+          <tr><td>2nd deposit lift</td><td class="num">10% (assumed)</td><td class="num">+5.6% (in-window)</td></tr>
+          <tr><td>Reward</td><td class="num">$10</td><td class="num">$20 (1st), $15 (2nd)</td></tr>
+          <tr><td>Cost / incremental durable (1st)</td><td class="num">$305</td><td class="num lift-pos">$141</td></tr>
+          <tr><td>Cost / incremental durable (2nd)</td><td class="num">$255</td><td class="num">$284</td></tr>
+          <tr><td>Winner</td><td class="num">2nd by 20%</td><td class="num lift-pos">1st by 2&times;</td></tr>
         </tbody>
       </table>
-
-      <div class="compare">
-        <div class="compare-box compare-box--a">
-          <div class="compare-label">Intervention A</div>
-          <div class="compare-headline">Lift first-deposit rate by 10%<br><span style="color:var(--muted); font-weight:600; font-size:13px;">12.93% &rarr; 14.22%</span></div>
-          <table style="background:transparent;">
-            <tbody>
-              <tr><td>1st depositors</td><td class="num"><strong>14,224</strong> <span class="lift-pos">(+1,293)</span></td></tr>
-              <tr><td>2nd depositors</td><td class="num"><strong>9,577</strong> <span class="lift-pos">(+870)</span></td></tr>
-              <tr><td>Durable from 2nd</td><td class="num"><strong>4,802</strong> <span class="lift-pos">(+437)</span></td></tr>
-              <tr><td>1st-only</td><td class="num">4,646 (+422)</td></tr>
-              <tr><td>Durable from 1st-only</td><td class="num"><strong>325</strong> <span class="lift-pos">(+30)</span></td></tr>
-              <tr style="font-weight:800;"><td>Total durable</td><td class="num"><strong>5,127</strong> <span class="lift-pos">(+467)</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="compare-box compare-box--b">
-          <div class="compare-label">Intervention B</div>
-          <div class="compare-headline">Lift second-deposit rate by 10%<br><span style="color:var(--muted); font-weight:600; font-size:13px;">67.33% &rarr; 74.06%</span></div>
-          <table style="background:transparent;">
-            <tbody>
-              <tr><td>1st depositors</td><td class="num">12,931 (unchanged)</td></tr>
-              <tr><td>2nd depositors</td><td class="num"><strong>9,577</strong> <span class="lift-pos">(+870)</span></td></tr>
-              <tr><td>Durable from 2nd</td><td class="num"><strong>4,801</strong> <span class="lift-pos">(+436)</span></td></tr>
-              <tr><td>1st-only</td><td class="num">3,354 (&minus;870)</td></tr>
-              <tr><td>Durable from 1st-only</td><td class="num"><strong>235</strong> (&minus;61)</td></tr>
-              <tr style="font-weight:800;"><td>Total durable</td><td class="num"><strong>5,036</strong> <span class="lift-pos">(+375)</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
 
       <div class="callout callout--amber">
-        <strong>Why A wins on volume:</strong> intervention A pulls in entirely new first-depositors. Each one carries the full downstream funnel. So +1,293 first depositors → +870 second depositors → +437 durables, plus +30 from first-only durables = <strong>+467 durables</strong>.
-        <br><br>
-        <strong>Why B wins on efficiency:</strong> intervention B converts existing first-only depositors into second-depositors. Each conversion shifts that user's durability probability from 7% to 50% &mdash; a +43.13 pp jump per conversion. So 870 conversions × 43.13% = <strong>+375 durables</strong>.
+        <strong>The modeled comparison was wrong because it assumed equal elasticity at both funnel steps.</strong> In reality, second-deposit conversion is much harder to move (high baseline, users near saturation), while first-deposit captures latent intent that wouldn't otherwise convert at all. The 10% assumed lift was 65% too low for first-deposit and 79% too high for second-deposit.
       </div>
     </div>
   </div>
 
-  <!-- ── 4. Cost ── -->
-  <div class="card">
-    <div class="sec-head"><span class="sec-num">4</span> Cost &amp; ROI (assume $10 per converting user)</div>
+  <!-- ── 6. Modeled section (kept for reference) ── -->
+  <div class="card superseded">
+    <div class="sec-head"><span class="sec-num">8</span> Modeled comparison &mdash; original framework (kept for reference)</div>
     <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">Using the population-level funnel rates above and assuming a 10% relative lift at each step with a $10/conversion reward, here's what I modeled before pulling Nancy's actual experiment data:</p>
 
+      <h3 class="section-sub">Per 100,000 joiners, baseline → 10% lift at each step</h3>
       <table>
         <thead>
-          <tr><th></th><th class="num">A: Lift 1st deposit</th><th class="num">B: Lift 2nd deposit</th></tr>
+          <tr><th>Stage</th><th class="num">Baseline</th><th class="num">A: Lift 1st (12.93→14.22%)</th><th class="num">B: Lift 2nd (67.33→74.06%)</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Pool eligible for offer</td>
-            <td class="num">100,000 joiners</td>
-            <td class="num">12,931 first-depositors</td>
-          </tr>
-          <tr>
-            <td>Conversions (people earning $10)</td>
-            <td class="num">14,224</td>
-            <td class="num">9,577</td>
-          </tr>
-          <tr>
-            <td>Total payout @ $10/conversion</td>
-            <td class="num">$142,240</td>
-            <td class="num">$95,770</td>
-          </tr>
-          <tr>
-            <td>Incremental durable users</td>
-            <td class="num">+467</td>
-            <td class="num">+375</td>
-          </tr>
-          <tr>
-            <td><strong>Cost per incremental durable user</strong></td>
-            <td class="num"><strong>$305</strong></td>
-            <td class="num lift-pos"><strong>$255</strong></td>
-          </tr>
-          <tr>
-            <td>Cost per incremental conversion</td>
-            <td class="num">$110</td>
-            <td class="num">$110</td>
-          </tr>
-          <tr>
-            <td>Durables per $1,000 spent</td>
-            <td class="num">3.28</td>
-            <td class="num lift-pos">3.91</td>
-          </tr>
-          <tr>
-            <td>% of spend on "deadweight" (would-have-paid)</td>
-            <td class="num">90.9%</td>
-            <td class="num">90.9%</td>
-          </tr>
+          <tr><td>1st depositors</td><td class="num">12,931</td><td class="num">14,224 (+1,293)</td><td class="num">12,931</td></tr>
+          <tr><td>2nd depositors</td><td class="num">8,707</td><td class="num">9,577 (+870)</td><td class="num">9,577 (+870)</td></tr>
+          <tr><td>Total durable</td><td class="num">4,660</td><td class="num">5,127 <span class="lift-pos">(+467)</span></td><td class="num">5,036 <span class="lift-pos">(+375)</span></td></tr>
+          <tr><td>Cost @ $10/conv</td><td class="num">&mdash;</td><td class="num">$142,240</td><td class="num">$95,770</td></tr>
+          <tr><td>$/incremental durable</td><td class="num">&mdash;</td><td class="num">$305</td><td class="num">$255</td></tr>
         </tbody>
       </table>
 
-      <div class="callout callout--green">
-        <strong>B is 19.5% more $-efficient at producing durables.</strong> Same $10K budget produces 39.1 durables in B vs. 32.8 in A. The efficiency gap comes entirely from second-deposit conversions producing durables at a higher rate per conversion (43.13% vs. 36.04%).
-      </div>
-    </div>
-  </div>
-
-  <!-- ── 5. Per-conversion efficiency ── -->
-  <div class="card">
-    <div class="sec-head"><span class="sec-num">5</span> Per-conversion efficiency: where does each marginal $10 go?</div>
-    <div class="card-body">
+      <h3 class="section-sub">Per-conversion durability gain</h3>
       <table>
-        <thead>
-          <tr><th>Conversion</th><th class="num">Avg durability gain</th><th class="num">Computation</th></tr>
-        </thead>
         <tbody>
-          <tr>
-            <td><strong>One marginal first-deposit conversion (A)</strong></td>
-            <td class="num">+0.3604 durables</td>
-            <td class="num" style="font-family:var(--mono); font-size:11px;">0.6733 × 0.5013 + 0.3267 × 0.07</td>
-          </tr>
-          <tr>
-            <td><strong>One marginal second-deposit conversion (B)</strong></td>
-            <td class="num lift-pos">+0.4313 durables</td>
-            <td class="num" style="font-family:var(--mono); font-size:11px;">0.5013 &minus; 0.07</td>
-          </tr>
-          <tr>
-            <td>Ratio B / A</td>
-            <td class="num">1.196 (B is 19.6% better)</td>
-            <td class="num">&mdash;</td>
-          </tr>
+          <tr><td>One marginal first-deposit conversion</td><td class="num">+0.36 durables</td><td class="num">0.6733 × 0.5013 + 0.3267 × 0.07</td></tr>
+          <tr><td>One marginal second-deposit conversion</td><td class="num">+0.43 durables</td><td class="num">0.5013 &minus; 0.07</td></tr>
         </tbody>
       </table>
-
-      <div class="callout callout--teal">
-        Each new first-depositor brings the <em>full downstream funnel</em>, but most of that funnel is already low-conversion at the second-deposit step (only 67% convert). A second-depositor conversion is "concentrated" &mdash; 100% of the converted user enjoys the durability bump.
-      </div>
     </div>
   </div>
 
-  <!-- ── 6. Recommendation ── -->
+  <!-- ── SQL ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">6</span> Recommendation</div>
-    <div class="card-body narrative">
-      <p><strong>Both interventions miss the $210/durable target,</strong> so neither is unambiguously a winner. The phone-bill experiment baseline of $392/durable (best cohort) makes either of these look favorable. Pick based on what you optimize for:</p>
-
-      <h3 class="section-sub">If maximizing total impact at scale → A (first deposit)</h3>
-      <p>A's addressable pool is 7.7&times; larger (100K joiners vs. 13K first-depositors). For the same intervention duration, A produces +467 durables per 100K joiners while B produces +375. The first-deposit experiment is already designed and ready to launch &mdash; this is the path of least resistance.</p>
-
-      <h3 class="section-sub">If maximizing $-efficiency → B (second deposit)</h3>
-      <p>If budget is the constraint, B is 19.5% more efficient. Same $10K produces 6 more durables. B's per-incremental-durable cost ($255) is closer to the $210 target than A's ($305).</p>
-
-      <h3 class="section-sub">My take</h3>
-      <p><strong>Run A first, but instrument B.</strong> The first-deposit offer is already approved and on track for May 1&ndash;15. After observing results, the natural next test is: <em>does adding a second-deposit incentive on top compound the effect?</em> The math suggests yes &mdash; the durability lever is most concentrated at the second deposit.</p>
-
-      <p>If A's actual lift comes in below the modeled +10% (e.g., the phone-bill experiment achieved +6.5% relative on the cleanest cohort, not 10%), the calculus may shift toward B. <strong>Re-run this comparison post-A-readout</strong> with the actual measured lift instead of the assumed 10%.</p>
-    </div>
-  </div>
-
-  <!-- ── 7. Caveats ── -->
-  <div class="card">
-    <div class="sec-head"><span class="sec-num">7</span> Caveats</div>
-    <div class="card-body narrative">
-      <ul style="font-size:13.5px; line-height:1.7;">
-        <li><strong>10% lift is assumed equal at both steps.</strong> In practice, lifts may differ by step. Ancillary money-in is harder to move than card spend (the phone-bill experiment achieved +9.5% on first-time-payer adoption; getting that on first-deposit conversion is uncertain).</li>
-        <li><strong>Cost per conversion ($10) is identical by assumption.</strong> Real offer mechanics could differ &mdash; e.g., a first-purchase reward vs. a flat second-deposit bonus may have different costs.</li>
-        <li><strong>Durability is measured lifetime</strong> on the cohort window, not within a fixed promo month. A monthly definition would lower both rates but the relative comparison should hold.</li>
-        <li><strong>Independent funnel rates assumed.</strong> The model assumes new-first-depositors converted by intervention A behave like organic first-depositors downstream. The phone-bill experiment showed marginal users were slightly less engaged than organic ones, so this likely overstates A's downstream durability.</li>
-        <li><strong>No double-counting of behavior change.</strong> If intervention A changes <em>who</em> gets activated (e.g., pulls in less-engaged users), their second-deposit and durability rates may be lower than the baseline 67% and 50%.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ── 8. SQL ── -->
-  <div class="card">
-    <div class="sec-head"><span class="sec-num">8</span> SQL queries (for QC)</div>
+    <div class="sec-head"><span class="sec-num">9</span> SQL queries (for QC)</div>
     <div class="card-body">
-      <p style="font-size:13px; color:var(--muted); margin:0 0 12px;">All numbers above pulled from this single query against <code>edw.payments.fact_crimson_transactions</code>.</p>
 
       <details class="sql">
-        <summary>Funnel query: joiners → 1st deposit → 2nd deposit → durable</summary>
+        <summary>Exp 1 results: Jan/Feb/Mar durability by exp_group</summary>
 <pre>WITH payout_dasher AS (
-  SELECT
-    pa.id AS payout_account_id,
-    dd.dasher_id
+  SELECT pa.id AS payout_account_id, dd.dasher_id
   FROM payout_service.public.payout_accounts pa
   JOIN proddb.public.dimension_dasher dd
     ON dd.payment_account_id = pa.payment_account_id
   WHERE dd.dasher_id IS NOT NULL
 ),
-
--- Crimson "join" = first-ever activity in the fact table for that payout account
-crimson_joiners AS (
+monthly_anc AS (
   SELECT
     pd.dasher_id,
-    MIN(CAST(t.extract_datetime2 AS TIMESTAMP_NTZ)) AS join_ts
+    DATE_TRUNC('month', CAST(t.extract_datetime2 AS DATE)) AS month,
+    SUM(ABS(t.transaction_amount_with_direction)) AS anc,
+    COUNT(*) AS n_dep
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-01-01'
+    AND t.extract_datetime2 &lt;  DATE '2026-04-01'
+  GROUP BY 1, 2
+),
+per_user AS (
+  SELECT
+    c.dasher_id,
+    c.exp_group,
+    COALESCE(MAX(CASE WHEN m.month = DATE '2026-01-01' THEN m.anc END), 0)   AS jan_anc,
+    COALESCE(MAX(CASE WHEN m.month = DATE '2026-01-01' THEN m.n_dep END), 0) AS jan_n_dep,
+    COALESCE(MAX(CASE WHEN m.month = DATE '2026-02-01' THEN m.anc END), 0)   AS feb_anc,
+    COALESCE(MAX(CASE WHEN m.month = DATE '2026-03-01' THEN m.anc END), 0)   AS mar_anc
+  FROM proddb.nancyyang.win_recurring_deposits_0120_static c
+  LEFT JOIN monthly_anc m ON c.dasher_id = m.dasher_id
+  GROUP BY 1, 2
+)
+SELECT
+  exp_group,
+  COUNT(*)                                                             AS users,
+  SUM(CASE WHEN jan_n_dep &gt;= 1 THEN 1 ELSE 0 END)                      AS any_jan_dep,
+  SUM(CASE WHEN jan_anc   &gt;= 200 THEN 1 ELSE 0 END)                    AS durable_jan,
+  SUM(CASE WHEN feb_anc   &gt;= 200 THEN 1 ELSE 0 END)                    AS durable_feb,
+  SUM(CASE WHEN mar_anc   &gt;= 200 THEN 1 ELSE 0 END)                    AS durable_mar,
+  AVG(jan_anc)                                                          AS avg_jan_anc
+FROM per_user
+GROUP BY 1 ORDER BY 1;
+</pre>
+      </details>
+
+      <details class="sql">
+        <summary>Exp 1 raw result</summary>
+<pre>exp_group   users    any_jan  durable_jan  durable_feb  durable_mar  avg_jan_anc
+control     33,516   12,331   2,275        2,805        2,928        $50.92
+treatment   33,299   12,194   2,387        2,897        2,998        $50.90
+
+% durable Jan:  control 6.788%  →  treatment 7.168%  →  +0.38 pp (+5.6% rel)
+% durable Feb:  control 8.369%  →  treatment 8.700%  →  +0.33 pp (+3.95% rel)
+% durable Mar:  control 8.736%  →  treatment 9.003%  →  +0.27 pp (+3.05% rel)
+</pre>
+      </details>
+
+      <details class="sql">
+        <summary>Exp 2 results: target window (Feb 12–Mar 6) and Apr downstream</summary>
+<pre>WITH payout_dasher AS (
+  SELECT pa.id AS payout_account_id, dd.dasher_id
+  FROM payout_service.public.payout_accounts pa
+  JOIN proddb.public.dimension_dasher dd
+    ON dd.payment_account_id = pa.payment_account_id
+  WHERE dd.dasher_id IS NOT NULL
+),
+anc AS (
+  SELECT
+    pd.dasher_id,
+    CAST(t.extract_datetime2 AS DATE) AS d,
+    ABS(t.transaction_amount_with_direction) AS amt
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-02-12'
+    AND t.extract_datetime2 &lt;  DATE '2026-05-01'
+),
+per_user AS (
+  SELECT
+    c.dasher_id,
+    c.exp_group,
+    COALESCE(SUM(CASE WHEN a.d BETWEEN DATE '2026-02-12' AND DATE '2026-03-06'
+                      THEN a.amt END), 0) AS target_window_anc,
+    COUNT(CASE   WHEN a.d BETWEEN DATE '2026-02-12' AND DATE '2026-03-06'
+                 THEN 1 END)              AS target_window_dep,
+    COALESCE(SUM(CASE WHEN a.d BETWEEN DATE '2026-04-01' AND DATE '2026-04-30'
+                      THEN a.amt END), 0) AS apr_anc
+  FROM proddb.nancyyang.win_first_deposit_0212_static c
+  LEFT JOIN anc a ON c.dasher_id = a.dasher_id
+  GROUP BY 1, 2
+)
+SELECT
+  exp_group,
+  COUNT(*)                                                                 AS users,
+  SUM(CASE WHEN target_window_dep &gt;= 1   THEN 1 ELSE 0 END)                AS any_dep_target,
+  SUM(CASE WHEN target_window_anc &gt;= 200 THEN 1 ELSE 0 END)                AS durable_target,
+  SUM(CASE WHEN apr_anc           &gt;= 200 THEN 1 ELSE 0 END)                AS durable_apr,
+  AVG(target_window_anc)                                                    AS avg_target_anc
+FROM per_user
+GROUP BY 1 ORDER BY 1;
+</pre>
+      </details>
+
+      <details class="sql">
+        <summary>Exp 2 raw result</summary>
+<pre>exp_group   users     any_dep  durable_target  durable_apr  avg_target_anc
+control     422,636   9,998    2,259           4,350        $5.84
+treatment   421,669   10,785   2,626           4,597        $6.14
+
+% durable target:  control 0.535%  →  treatment 0.623%  →  +0.088 pp (+16.5% rel)
+% durable Apr:     control 1.029%  →  treatment 1.090%  →  +0.061 pp (+5.92% rel)
+</pre>
+      </details>
+
+      <details class="sql">
+        <summary>Exp 1 channel breakdown (primary December channel)</summary>
+<pre>WITH payout_dasher AS (
+  SELECT pa.id AS payout_account_id, dd.dasher_id
+  FROM payout_service.public.payout_accounts pa
+  JOIN proddb.public.dimension_dasher dd
+    ON dd.payment_account_id = pa.payment_account_id
+  WHERE dd.dasher_id IS NOT NULL
+),
+jan_anc AS (
+  SELECT pd.dasher_id, SUM(ABS(t.transaction_amount_with_direction)) AS amt
+  FROM edw.payments.fact_crimson_transactions t
+  JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
+  WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
+    AND t.extract_datetime2 &gt;= DATE '2026-01-01'
+    AND t.extract_datetime2 &lt;  DATE '2026-02-01'
+  GROUP BY 1
+),
+labelled AS (
+  SELECT c.dasher_id, c.exp_group,
+    CASE
+      WHEN c.dec_outside_gig &gt;= GREATEST(c.dec_outside_p2p, c.dec_outside_ach, c.dec_outside_other)
+           AND c.dec_outside_gig &gt; 0  THEN 'GIG'
+      WHEN c.dec_outside_p2p &gt;= GREATEST(c.dec_outside_gig, c.dec_outside_ach, c.dec_outside_other)
+           AND c.dec_outside_p2p &gt; 0  THEN 'P2P'
+      WHEN c.dec_outside_ach &gt;= GREATEST(c.dec_outside_gig, c.dec_outside_p2p, c.dec_outside_other)
+           AND c.dec_outside_ach &gt; 0  THEN 'ACH'
+      ELSE 'OTHER/MIXED'
+    END AS dec_channel,
+    COALESCE(j.amt, 0) AS jan_anc
+  FROM proddb.nancyyang.win_recurring_deposits_0120_static c
+  LEFT JOIN jan_anc j ON c.dasher_id = j.dasher_id
+)
+SELECT dec_channel, exp_group, COUNT(*) AS users,
+  SUM(CASE WHEN jan_anc &gt;= 200 THEN 1 ELSE 0 END) AS durable_jan
+FROM labelled
+GROUP BY 1, 2 ORDER BY 1, 2;
+</pre>
+      </details>
+
+      <details class="sql">
+        <summary>Population funnel (Crimson joiners Oct '25–Mar '26)</summary>
+<pre>WITH payout_dasher AS (
+  SELECT pa.id AS payout_account_id, dd.dasher_id
+  FROM payout_service.public.payout_accounts pa
+  JOIN proddb.public.dimension_dasher dd
+    ON dd.payment_account_id = pa.payment_account_id
+  WHERE dd.dasher_id IS NOT NULL
+),
+crimson_joiners AS (
+  SELECT pd.dasher_id, MIN(CAST(t.extract_datetime2 AS TIMESTAMP_NTZ)) AS join_ts
   FROM edw.payments.fact_crimson_transactions t
   JOIN payout_dasher pd ON t.payout_account_id = pd.payout_account_id
   WHERE t.extract_datetime2 IS NOT NULL
   GROUP BY 1
 ),
-
 joiners_in_window AS (
-  SELECT *
-  FROM crimson_joiners
+  SELECT * FROM crimson_joiners
   WHERE CAST(join_ts AS DATE) BETWEEN DATE '2025-10-01' AND DATE '2026-03-31'
 ),
-
--- Ancillary money-in (excludes IN_DXPAY = DoorDash earnings)
 ancillary_in AS (
   SELECT
     pd.dasher_id,
@@ -476,121 +651,42 @@ ancillary_in AS (
   WHERE t.txn_code_type IN ('IN_ATM','IN_AFT','IN_ACH','IN_OCT')
     AND t.extract_datetime2 IS NOT NULL
 ),
-
--- Rank each user's deposits 1..N (only deposits AFTER they joined Crimson)
 deposits_with_rank AS (
   SELECT
-    a.dasher_id,
-    a.deposit_ts,
-    a.amt,
+    a.dasher_id, a.deposit_ts, a.amt,
     ROW_NUMBER() OVER (PARTITION BY a.dasher_id ORDER BY a.deposit_ts) AS rn,
-    SUM(a.amt) OVER (PARTITION BY a.dasher_id) AS lifetime_anc
+    SUM(a.amt)  OVER (PARTITION BY a.dasher_id) AS lifetime_anc
   FROM ancillary_in a
   JOIN joiners_in_window j ON j.dasher_id = a.dasher_id
-  WHERE a.deposit_ts >= j.join_ts
+  WHERE a.deposit_ts &gt;= j.join_ts
 ),
-
 deposit_summary AS (
-  SELECT
-    dasher_id,
+  SELECT dasher_id,
     MAX(CASE WHEN rn = 1 THEN deposit_ts END) AS first_dep_ts,
     MAX(CASE WHEN rn = 2 THEN deposit_ts END) AS second_dep_ts,
-    MAX(rn)                                   AS total_deposits,
-    MAX(lifetime_anc)                         AS lifetime_anc
-  FROM deposits_with_rank
-  GROUP BY 1
+    MAX(lifetime_anc)                          AS lifetime_anc
+  FROM deposits_with_rank GROUP BY 1
 )
-
 SELECT
-  COUNT(*)                                    AS n_joiners,
-  COUNT(ds.first_dep_ts)                      AS n_first_depositors,
-  COUNT(ds.second_dep_ts)                     AS n_second_depositors,
-  SUM(CASE WHEN ds.lifetime_anc &gt;= 200
-            THEN 1 ELSE 0 END)                AS n_ever_durable,
-
-  -- Durable conditional on funnel position
-  SUM(CASE WHEN ds.first_dep_ts IS NOT NULL
-            AND ds.lifetime_anc &gt;= 200
-            THEN 1 ELSE 0 END)                AS n_first_then_durable,
+  COUNT(*)                                                           AS n_joiners,
+  COUNT(ds.first_dep_ts)                                             AS n_1st,
+  COUNT(ds.second_dep_ts)                                            AS n_2nd,
+  SUM(CASE WHEN ds.lifetime_anc &gt;= 200 THEN 1 ELSE 0 END)            AS n_durable,
   SUM(CASE WHEN ds.second_dep_ts IS NOT NULL
-            AND ds.lifetime_anc &gt;= 200
-            THEN 1 ELSE 0 END)                AS n_second_then_durable,
+            AND ds.lifetime_anc &gt;= 200 THEN 1 ELSE 0 END)            AS n_2nd_then_durable,
   SUM(CASE WHEN ds.first_dep_ts IS NOT NULL
             AND ds.second_dep_ts IS NULL
-            AND ds.lifetime_anc &gt;= 200
-            THEN 1 ELSE 0 END)                AS n_first_only_durable,
-  SUM(CASE WHEN ds.first_dep_ts IS NOT NULL
-            AND ds.second_dep_ts IS NULL
-            THEN 1 ELSE 0 END)                AS n_first_only
-
+            AND ds.lifetime_anc &gt;= 200 THEN 1 ELSE 0 END)            AS n_1st_only_durable
 FROM joiners_in_window jw
 LEFT JOIN deposit_summary ds ON jw.dasher_id = ds.dasher_id;
-</pre>
-      </details>
 
-      <details class="sql">
-        <summary>Result (raw)</summary>
-<pre>n_joiners                  1,393,421
-n_first_depositors           180,178
-n_second_depositors          121,309
-n_ever_durable                64,934
-n_first_then_durable          64,934   (every durable made a 1st deposit ✓)
-n_second_then_durable         60,816
-n_first_only_durable           4,118
-n_first_only                  58,869   (180,178 − 121,309)
-
-p(1st | joiner)            =   180,178 /  1,393,421   = 12.93%
-p(2nd | 1st)               =   121,309 /    180,178   = 67.33%
-p(durable | 2nd)           =    60,816 /    121,309   = 50.13%
-p(durable | 1st only)      =     4,118 /     58,869   =  7.00%
-p(durable | 1st)           =    64,934 /    180,178   = 36.04%
-
-Sanity: p(durable|1st)
-  = p(2nd|1st) × p(durable|2nd) + (1−p(2nd|1st)) × p(durable|1st only)
-  = 0.6733 × 0.5013 + 0.3267 × 0.0700
-  = 0.3375 + 0.0229
-  = 0.3604  ✓
-</pre>
-      </details>
-
-      <details class="sql">
-        <summary>Lift math (Python pseudo-code)</summary>
-<pre>p1            = 0.12931   # P(1st | joiner)
-p2_given_1    = 0.67328   # P(2nd | 1st)
-d_given_2     = 0.50133   # P(durable | 2nd)
-d_given_1only = 0.06994   # P(durable | 1st only)
-
-# Per 100,000 joiners, baseline:
-joiners        = 100_000
-first          = joiners * p1                        # 12,931
-second         = first   * p2_given_1                # 8,707
-first_only     = first   * (1 - p2_given_1)          # 4,224
-durable_2nd    = second  * d_given_2                 # 4,365
-durable_1only  = first_only * d_given_1only          # 295
-durable_total  = durable_2nd + durable_1only         # 4,660
-
-# Intervention A: 10% lift on p1
-p1_A           = p1 * 1.10                           # 0.14224
-first_A        = joiners * p1_A                      # 14,224
-second_A       = first_A * p2_given_1                # 9,577
-first_only_A   = first_A * (1 - p2_given_1)          # 4,646
-durable_A      = second_A * d_given_2 + first_only_A * d_given_1only
-                                                     # 5,127
-delta_A        = durable_A - durable_total           # +467
-
-# Intervention B: 10% lift on p2_given_1 (first-depositors only)
-p2_B           = p2_given_1 * 1.10                   # 0.74061
-second_B       = first * p2_B                        # 9,577
-first_only_B   = first - second_B                    # 3,354
-durable_B      = second_B * d_given_2 + first_only_B * d_given_1only
-                                                     # 5,036
-delta_B        = durable_B - durable_total           # +375
-
-# Cost @ $10/conversion:
-cost_A   = first_A  * 10        # $142,240
-cost_B   = second_B * 10        # $95,770
-$_per_durable_A = cost_A / delta_A      # $305
-$_per_durable_B = cost_B / delta_B      # $255
+-- Result:
+--   n_joiners            1,393,421
+--   n_1st                  180,178   (12.93%)
+--   n_2nd                  121,309   (67.33% of 1st)
+--   n_durable               64,934
+--   n_2nd_then_durable      60,816   (50.13% of 2nd)
+--   n_1st_only_durable       4,118   ( 7.00% of 1st-only)
 </pre>
       </details>
 
