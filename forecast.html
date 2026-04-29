@@ -295,9 +295,113 @@
     </div>
   </div>
 
-  <!-- ── 5. Risks ── -->
+  <!-- ── 5. Tenure segmentation ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">5</span> Risks and caveats</div>
+    <div class="sec-head"><span class="sec-num">5</span> Where is the lift strongest? Durability by Crimson tenure</div>
+    <div class="card-body">
+      <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Exp 2 cohort segmented by how long each user had been on Crimson at the time of enrollment (Feb 12, 2026). All users had been on Crimson for 30+ days (F30D exclusion in eligibility). Durability = deposited $200+ in the target window (Feb 12 &ndash; Mar 6).</p>
+
+      <h3 class="section-sub">Durability rate by tenure: Treatment vs Control</h3>
+      <div style="position:relative; height:320px; margin-bottom:20px;">
+        <canvas id="chart-tenure-durable"></canvas>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Tenure</th><th class="num">Control n</th><th class="num">Control durable %</th><th class="num">Treatment n</th><th class="num">Treatment durable %</th><th class="num">Δ pp</th><th class="num">Δ relative</th><th class="num">Incremental durables</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>F30&ndash;F60D</td>
+            <td class="num">84,697</td>
+            <td class="num">0.682%</td>
+            <td class="num">84,571</td>
+            <td class="num">0.719%</td>
+            <td class="num lift-pos">+0.037 pp</td>
+            <td class="num lift-pos">+5.4%</td>
+            <td class="num">+31</td>
+          </tr>
+          <tr>
+            <td>F60&ndash;F90D</td>
+            <td class="num">40,336</td>
+            <td class="num">0.659%</td>
+            <td class="num">39,887</td>
+            <td class="num">0.765%</td>
+            <td class="num lift-pos">+0.105 pp</td>
+            <td class="num lift-pos">+15.9%</td>
+            <td class="num">+42</td>
+          </tr>
+          <tr>
+            <td>F90&ndash;F180D</td>
+            <td class="num">69,315</td>
+            <td class="num">0.514%</td>
+            <td class="num">69,814</td>
+            <td class="num">0.582%</td>
+            <td class="num lift-pos">+0.068 pp</td>
+            <td class="num lift-pos">+13.2%</td>
+            <td class="num">+48</td>
+          </tr>
+          <tr>
+            <td>F180D&ndash;1Y</td>
+            <td class="num">116,243</td>
+            <td class="num">0.434%</td>
+            <td class="num">115,130</td>
+            <td class="num">0.519%</td>
+            <td class="num lift-pos">+0.086 pp</td>
+            <td class="num lift-pos">+19.8%</td>
+            <td class="num">+99</td>
+          </tr>
+          <tr>
+            <td>1Y+</td>
+            <td class="num">112,045</td>
+            <td class="num">0.382%</td>
+            <td class="num">112,267</td>
+            <td class="num">0.504%</td>
+            <td class="num lift-pos">+0.122 pp</td>
+            <td class="num lift-pos">+32.0%</td>
+            <td class="num">+137</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--green">
+        <strong>The incentive works across all tenure segments, but the relative lift is highest for the longest-tenured users.</strong> Users on Crimson for 1Y+ show a +32% relative lift (0.382% &rarr; 0.504%), contributing the most incremental durables (137). This is counterintuitive &mdash; older non-depositors might seem like lost causes, but they respond strongly to the incentive. Possibly these users have built trust with Crimson over time but never had a reason to deposit until now.
+      </div>
+
+      <h3 class="section-sub">Any-deposit rate by tenure</h3>
+      <div style="position:relative; height:320px; margin-bottom:20px;">
+        <canvas id="chart-tenure-deposit"></canvas>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Tenure</th><th class="num">Control any-dep %</th><th class="num">Treatment any-dep %</th><th class="num">Δ pp</th><th class="num">Δ relative</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>F30&ndash;F60D</td><td class="num">2.79%</td><td class="num">2.95%</td><td class="num lift-pos">+0.16 pp</td><td class="num lift-pos">+5.6%</td></tr>
+          <tr><td>F60&ndash;F90D</td><td class="num">2.74%</td><td class="num">3.05%</td><td class="num lift-pos">+0.30 pp</td><td class="num lift-pos">+11.1%</td></tr>
+          <tr><td>F90&ndash;F180D</td><td class="num">2.39%</td><td class="num">2.56%</td><td class="num lift-pos">+0.17 pp</td><td class="num lift-pos">+7.2%</td></tr>
+          <tr><td>F180D&ndash;1Y</td><td class="num">2.15%</td><td class="num">2.30%</td><td class="num lift-pos">+0.15 pp</td><td class="num lift-pos">+7.1%</td></tr>
+          <tr><td>1Y+</td><td class="num">1.80%</td><td class="num">2.03%</td><td class="num lift-pos">+0.23 pp</td><td class="num lift-pos">+12.6%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--teal">
+        <strong>Deposit adoption rates decline with tenure</strong> (2.95% for F30&ndash;F60D vs 2.03% for 1Y+), but the <strong>relative lift is strongest at both ends</strong>: F60&ndash;F90D (+11.1%) and 1Y+ (+12.6%). The incentive isn't just accelerating recent joiners &mdash; it's unlocking dormant intent in long-tenured users who had settled into non-deposit behavior.
+      </div>
+
+      <h3 class="section-sub">Implications for scaling</h3>
+      <ul style="font-size:13.5px; line-height:1.7;">
+        <li><strong>Don't exclude long-tenured users.</strong> 1Y+ users contribute the most incremental durables (137 of 357 total = 38%) despite having the lowest baseline. Removing them would sacrifice the largest segment of lift.</li>
+        <li><strong>F30&ndash;F60D has the weakest relative lift</strong> (+5.4%) despite the highest baseline. These users are the most likely to deposit organically; the incentive adds less marginal value here. If budget is constrained, deprioritize this segment last &mdash; but it's still positive.</li>
+        <li><strong>The forecast pool composition will shift over time.</strong> In month 1 the pool is dominated by 1Y+ and F180D&ndash;1Y users (existing stock). By month 4+, new inflow (F30&ndash;F60D) becomes a larger share. Expect the blended lift to start high and gradually decline toward the F30&ndash;F60D rate.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 6. Risks ── -->
+  <div class="card">
+    <div class="sec-head"><span class="sec-num">6</span> Risks and caveats</div>
     <div class="card-body narrative">
       <ul style="font-size:13.5px;">
         <li><strong>Lift attenuation at scale:</strong> Exp 2 ran for 22 days on a pre-screened cohort. An always-on program cycles through the highest-intent users first; later months pull from a lower-intent pool. Expect lift to decay 25&ndash;50% over time.</li>
@@ -311,7 +415,7 @@
 
   <!-- ── 6. Bottom line ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">6</span> Bottom line</div>
+    <div class="sec-head"><span class="sec-num">7</span> Bottom line</div>
     <div class="card-body narrative">
       <p>At Exp 2's measured rates and $20 reward:</p>
       <ul style="font-size:14px; font-weight:600;">
@@ -325,6 +429,70 @@
   </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  var labels = ['F30–F60D', 'F60–F90D', 'F90–F180D', 'F180D–1Y', '1Y+'];
+  var controlDur = [0.682, 0.659, 0.514, 0.434, 0.382];
+  var treatDur   = [0.719, 0.765, 0.582, 0.519, 0.504];
+  var controlDep = [2.793, 2.744, 2.386, 2.149, 1.798];
+  var treatDep   = [2.950, 3.049, 2.558, 2.302, 2.026];
+
+  var teal = '#45818e';
+  var amber = '#d97706';
+  var green = '#15803d';
+  var muted = '#7e9299';
+
+  function pctCallback(v) { return v.toFixed(2) + '%'; }
+
+  new Chart(document.getElementById('chart-tenure-durable'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Control', data: controlDur, backgroundColor: muted, borderRadius: 3, barPercentage: 0.7 },
+        { label: 'Treatment', data: treatDur, backgroundColor: teal, borderRadius: 3, barPercentage: 0.7 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        legend: { position: 'top', align: 'start', labels: { boxWidth: 10, font: { size: 11, weight: '600' } } },
+        title: { display: true, text: 'Durable rate (% depositing $200+ in target window) by Crimson tenure', font: { size: 13, weight: '800' }, color: '#1e2d31', padding: { bottom: 12 } },
+        tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(3) + '%'; } } }
+      },
+      scales: {
+        y: { title: { display: true, text: '% durable', font: { size: 11, weight: '600' }, color: muted }, ticks: { callback: pctCallback, font: { size: 10 }, color: muted }, grid: { color: '#f0f2f4' } },
+        x: { ticks: { font: { size: 11 }, color: muted }, grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chart-tenure-deposit'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Control', data: controlDep, backgroundColor: muted, borderRadius: 3, barPercentage: 0.7 },
+        { label: 'Treatment', data: treatDep, backgroundColor: green, borderRadius: 3, barPercentage: 0.7 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        legend: { position: 'top', align: 'start', labels: { boxWidth: 10, font: { size: 11, weight: '600' } } },
+        title: { display: true, text: 'Any-deposit rate (% making any outside deposit in target window) by Crimson tenure', font: { size: 13, weight: '800' }, color: '#1e2d31', padding: { bottom: 12 } },
+        tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'; } } }
+      },
+      scales: {
+        y: { title: { display: true, text: '% any deposit', font: { size: 11, weight: '600' }, color: muted }, ticks: { callback: pctCallback, font: { size: 10 }, color: muted }, grid: { color: '#f0f2f4' } },
+        x: { ticks: { font: { size: 11 }, color: muted }, grid: { display: false } }
+      }
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
