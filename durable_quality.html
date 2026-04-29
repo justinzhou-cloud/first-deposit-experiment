@@ -76,8 +76,8 @@
   <div class="verdict-row">
     <div class="verdict-card">
       <div class="verdict-tag">Key finding</div>
-      <div class="verdict-headline">Incentive-created durables are indistinguishable from organic durables on downstream behavior.</div>
-      <p class="verdict-sub">In Exp 1 (win 2nd deposit), treatment durables match or slightly exceed control durables on every quality metric: durable retention, POS spend, and dashing hours. Treatment durables are even more likely to remain durable in subsequent months (+2.8 pp in month 2, +1.7 pp in both months). The incentive is not creating shallow, one-time durables.</p>
+      <div class="verdict-headline">Two different stories: Exp 1 durables are equal quality; Exp 2 durables are slightly lower quality.</div>
+      <p class="verdict-sub"><strong>Exp 1</strong> (win 2nd deposit): treatment durables match or exceed control on every metric &mdash; retention is actually <em>better</em> (+2.8 pp). <strong>Exp 2</strong> (win 1st deposit): treatment durables are modestly lower quality &mdash; retention is &minus;2.1 pp, deposits &minus;10%, POS &minus;3.7%, dashing &minus;1.2%. The first-deposit incentive creates real but somewhat shallower durables. The 2&times; cost advantage still holds after discounting for quality.</p>
     </div>
   </div>
 
@@ -177,14 +177,18 @@
       <h3 class="section-sub">Durable retention</h3>
       <table>
         <thead>
-          <tr><th></th><th class="num">Control (n=2,259)</th><th class="num">Treatment (n=2,626)</th><th class="num">Δ</th></tr>
+          <tr><th></th><th class="num">Control (n=2,132)</th><th class="num">Treatment (n=2,483)</th><th class="num">Δ</th></tr>
         </thead>
         <tbody>
-          <tr><td>% durable again in 28d post (Mar 7 &ndash; Apr 3)</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
-          <tr><td>% durable in 28&ndash;56d post (Apr 4 &ndash; Apr 30)</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
-          <tr><td>% durable in both</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>% durable again in 28d post (Mar 7 &ndash; Apr 3)</td><td class="num">34.80%</td><td class="num">32.74%</td><td class="num lift-neg">&minus;2.06 pp</td></tr>
+          <tr><td>% durable in 28&ndash;56d post (Apr 4 &ndash; Apr 30)</td><td class="num">23.87%</td><td class="num">23.32%</td><td class="num lift-flat">&minus;0.56 pp</td></tr>
+          <tr><td>% durable in both</td><td class="num">17.82%</td><td class="num">16.35%</td><td class="num lift-neg">&minus;1.47 pp</td></tr>
         </tbody>
       </table>
+
+      <div class="callout callout--amber">
+        <strong>Treatment durables retain at a slightly lower rate.</strong> 32.7% of treatment durables hit $200+ again in the 28d post window vs 34.8% for control (&minus;2.06 pp). The gap narrows in the second window and persists at &minus;1.47 pp on the "both" metric. The incentive created marginally shallower durables than organic ones &mdash; but the difference is modest, not dramatic.
+      </div>
 
       <h3 class="section-sub">Deposit behavior (28d post)</h3>
       <table>
@@ -192,8 +196,8 @@
           <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
         </thead>
         <tbody>
-          <tr><td>Avg 28d post ancillary $</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
-          <tr><td>Avg 28d post deposit days</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>Avg 28d post ancillary $</td><td class="num">$364.60</td><td class="num">$327.80</td><td class="num lift-neg">&minus;10.1%</td></tr>
+          <tr><td>Avg 28d post deposit days</td><td class="num">2.41</td><td class="num">2.29</td><td class="num lift-flat">&minus;4.7%</td></tr>
         </tbody>
       </table>
 
@@ -203,8 +207,8 @@
           <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
         </thead>
         <tbody>
-          <tr><td>Avg 28d post POS $</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
-          <tr><td>Avg 28d post POS transactions</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>Avg 28d post POS $</td><td class="num">$802.61</td><td class="num">$773.22</td><td class="num lift-neg">&minus;3.7%</td></tr>
+          <tr><td>Avg 28d post POS transactions</td><td class="num">40.5</td><td class="num">39.2</td><td class="num lift-flat">&minus;3.4%</td></tr>
         </tbody>
       </table>
 
@@ -214,28 +218,55 @@
           <tr><th></th><th class="num">Control</th><th class="num">Treatment</th><th class="num">Δ</th></tr>
         </thead>
         <tbody>
-          <tr><td>Avg 28d post hours</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td><td class="num tbd">TBD</td></tr>
+          <tr><td>Avg 28d post hours</td><td class="num">27.64</td><td class="num">27.30</td><td class="num lift-flat">&minus;1.2%</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout--amber">
-        <strong>Exp 2 data pending.</strong> The Snowflake query for this section timed out during SSO authentication. The SQL is ready below &mdash; run it once after signing in to Snowflake and fill in the TBD cells above.
+        <strong>Treatment durables are slightly lower quality across the board.</strong> Deposits &minus;10%, POS spend &minus;3.7%, dashing &minus;1.2% in the 28d post window. The marginal first-deposit durables the incentive created are real (they dash, they spend) but they're at the lower end of the durable distribution. This contrasts with Exp 1 where treatment durables were indistinguishable from control.
       </div>
     </div>
   </div>
 
   <!-- ── 3. Interpretation ── -->
   <div class="card">
-    <div class="sec-head"><span class="sec-num">3</span> Interpretation (Exp 1; update when Exp 2 lands)</div>
+    <div class="sec-head"><span class="sec-num">3</span> Interpretation</div>
     <div class="card-body narrative">
-      <h3 class="section-sub">The incentive isn't creating shallow durables</h3>
-      <p>Treatment durables from Exp 1 are <strong>indistinguishable from organic durables</strong> on retention, POS spend, and dashing hours. In fact, they're slightly <em>better</em> on durable retention (+2.81 pp in month 2, +1.67 pp in both months) and post-bonus dashing (+3.0%). The 5% drag on deposit volume in the bonus month narrows to 2% post-bonus and is consistent with marginal users barely clearing the $200 bar.</p>
+      <h3 class="section-sub">Two different stories</h3>
+      <p><strong>Exp 1 (2nd deposit):</strong> Treatment durables are indistinguishable from organic ones. Retention is actually +2.8 pp better, POS spend converges post-bonus, dashing is +3%. The $15 bonus reinforced behavior in users who were already on a deposit trajectory &mdash; it didn't attract low-quality users.</p>
+      <p><strong>Exp 2 (1st deposit):</strong> Treatment durables are modestly lower quality. Retention is &minus;2.1 pp, deposits are &minus;10%, POS spend &minus;3.7%, dashing &minus;1.2%. The $20 bonus activated users with latent intent who had never deposited before &mdash; they're real dashers (27.3 hrs/month, $773 POS spend) but they sit at the lower end of the durable distribution.</p>
 
-      <h3 class="section-sub">What this means for your experiment</h3>
-      <p>If Exp 2 shows the same pattern (treatment durables ≈ control durables on quality), then the cost-per-incremental-durable metric ($141) fully captures the value created. There's no hidden quality discount to worry about &mdash; <strong>an incentive-created durable is worth the same as an organic one.</strong></p>
+      <h3 class="section-sub">Does this change the first-deposit recommendation?</h3>
+      <p><strong>No, but it nuances it.</strong> The quality discount in Exp 2 is ~5&ndash;10% across metrics. If we discount the $141 cost-per-incremental-durable by the retention gap (&minus;2.1 pp / 34.8 pp baseline &asymp; 6% lower quality), the effective cost is closer to <strong>~$150</strong>. That's still well under Exp 1's $284. The 2&times; advantage holds after quality adjustment.</p>
 
-      <h3 class="section-sub">What would change the conclusion</h3>
-      <p>If Exp 2 treatment durables show meaningfully lower retention (e.g., 10+ pp less likely to stay durable in the 28d post window) or lower POS spend, it would suggest that first-deposit incentives produce shallower durables than second-deposit incentives. That wouldn't invalidate the first-deposit strategy (2&times; cost advantage is large), but it would mean the effective LTV discount needs to be factored into scaling decisions.</p>
+      <h3 class="section-sub">Side-by-side summary</h3>
+      <table>
+        <thead>
+          <tr><th>Quality metric (28d post)</th><th class="num">Exp 1 (2nd deposit)</th><th class="num">Exp 2 (1st deposit)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Durable retention Δ (T vs C)</td><td class="num lift-pos">+0.48 pp</td><td class="num lift-neg">&minus;2.06 pp</td></tr>
+          <tr><td>Deposit volume Δ</td><td class="num lift-flat">&minus;2.0%</td><td class="num lift-neg">&minus;10.1%</td></tr>
+          <tr><td>POS spend Δ</td><td class="num lift-pos">+0.8%</td><td class="num lift-neg">&minus;3.7%</td></tr>
+          <tr><td>Dashing hours Δ</td><td class="num lift-pos">+3.0%</td><td class="num lift-flat">&minus;1.2%</td></tr>
+          <tr><td>Cost per incremental durable</td><td class="num">$284</td><td class="num lift-pos">$141</td></tr>
+          <tr><td>Quality-adjusted cost (est.)</td><td class="num">~$284</td><td class="num lift-pos">~$150</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout--green">
+        <strong>First-deposit still wins by ~1.9&times; after quality adjustment.</strong> The quality discount is real but small enough that the cost advantage dominates. This is worth monitoring in your "$10 first purchase on us" experiment &mdash; if your bundling mechanism pulls in higher-quality marginal users (because they're spending on the card, not just depositing), you could narrow the quality gap while keeping the cost advantage.
+      </div>
+
+      <h3 class="section-sub">Why the quality difference exists</h3>
+      <p>The structural explanation is simple: <strong>Exp 1 reinforces; Exp 2 activates.</strong></p>
+      <ul style="font-size:13.5px;">
+        <li>Exp 1 users already deposited once in December. The bonus nudges them to do it again. These are users with proven deposit behavior &mdash; the marginal ones are close to the median, hence similar quality.</li>
+        <li>Exp 2 users had <em>never</em> deposited. The bonus creates entirely new behavior. The marginal ones are at the very bottom of the "latent intent" distribution &mdash; they'll dash and spend, but less intensely than users who would have deposited without the nudge.</li>
+      </ul>
+
+      <h3 class="section-sub">Implication for your experiment</h3>
+      <p>Your "$10 first purchase on us" targets the same population as Exp 2 (never-deposited) but with a <strong>bundled deposit+spend mechanism</strong>. If the spend requirement filters for users with immediate purchase intent (not speculative depositors), the quality of marginal durables could be higher than Exp 2's. The 28-day post-bonus quality check should be built into your readout plan.</p>
     </div>
   </div>
 
