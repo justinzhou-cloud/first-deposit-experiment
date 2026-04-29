@@ -117,6 +117,15 @@
     <div class="card-body">
       <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">Each month: eligible pool &times; treatment durable rate = qualifiers. Incremental = (treatment rate &minus; control rate) &times; pool. Cost = qualifiers &times; $20. Pool shrinks as qualifiers + organic converters exit; grows as new joiners enter.</p>
 
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+        <div style="position:relative; height:300px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px;">
+          <canvas id="chart-forecast-durables"></canvas>
+        </div>
+        <div style="position:relative; height:300px; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px;">
+          <canvas id="chart-forecast-cost"></canvas>
+        </div>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -433,6 +442,69 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script>
 (function () {
+  /* ── Forecast charts ── */
+  var months = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var incrDurables = [743, 754, 766, 777, 789, 800, 811, 822];
+  var cumDurables = [];
+  var cumCost = [];
+  var monthlyCost = [105166, 106790, 108408, 110017, 111619, 113213, 114800, 116380];
+  var running = 0; var runCost = 0;
+  for (var i = 0; i < months.length; i++) {
+    running += incrDurables[i]; cumDurables.push(running);
+    runCost += monthlyCost[i]; cumCost.push(Math.round(runCost / 1000));
+  }
+
+  var tealC = '#45818e'; var greenC = '#15803d'; var amberC = '#d97706'; var mutedC = '#7e9299';
+
+  new Chart(document.getElementById('chart-forecast-durables'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        { label: 'Monthly incremental durables', data: incrDurables, backgroundColor: tealC, borderRadius: 3, barPercentage: 0.6, yAxisID: 'y' },
+        { label: 'Cumulative durables', data: cumDurables, type: 'line', borderColor: greenC, backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: greenC, tension: 0.2, yAxisID: 'y2' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        title: { display: true, text: 'Incremental Durables (monthly + cumulative)', font: { size: 12, weight: '800' }, color: '#1e2d31', padding: { bottom: 8 } },
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10, weight: '600' } } },
+        tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString(); } } }
+      },
+      scales: {
+        y: { position: 'left', title: { display: true, text: 'Monthly', font: { size: 10, weight: '600' }, color: mutedC }, ticks: { font: { size: 10 }, color: mutedC }, grid: { color: '#f0f2f4' } },
+        y2: { position: 'right', title: { display: true, text: 'Cumulative', font: { size: 10, weight: '600' }, color: greenC }, ticks: { font: { size: 10 }, color: greenC }, grid: { display: false } },
+        x: { ticks: { font: { size: 11 }, color: mutedC }, grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('chart-forecast-cost'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        { label: 'Monthly cost ($K)', data: monthlyCost.map(function(v){return Math.round(v/1000);}), backgroundColor: amberC, borderRadius: 3, barPercentage: 0.6, yAxisID: 'y' },
+        { label: 'Cumulative cost ($K)', data: cumCost, type: 'line', borderColor: '#b91c1c', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#b91c1c', tension: 0.2, yAxisID: 'y2' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        title: { display: true, text: 'Incentive Cost ($K, monthly + cumulative)', font: { size: 12, weight: '800' }, color: '#1e2d31', padding: { bottom: 8 } },
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10, weight: '600' } } },
+        tooltip: { callbacks: { label: function(ctx) { return ctx.dataset.label + ': $' + ctx.parsed.y + 'K'; } } }
+      },
+      scales: {
+        y: { position: 'left', title: { display: true, text: 'Monthly ($K)', font: { size: 10, weight: '600' }, color: mutedC }, ticks: { font: { size: 10 }, color: mutedC, callback: function(v) { return '$'+v+'K'; } }, grid: { color: '#f0f2f4' } },
+        y2: { position: 'right', title: { display: true, text: 'Cumulative ($K)', font: { size: 10, weight: '600' }, color: '#b91c1c' }, ticks: { font: { size: 10 }, color: '#b91c1c', callback: function(v) { return '$'+v+'K'; } }, grid: { display: false } },
+        x: { ticks: { font: { size: 11 }, color: mutedC }, grid: { display: false } }
+      }
+    }
+  });
+
+  /* ── Tenure charts ── */
   var labels = ['F30–F60D', 'F60–F90D', 'F90–F180D', 'F180D–1Y', '1Y+'];
   var controlDur = [0.682, 0.659, 0.514, 0.434, 0.382];
   var treatDur   = [0.719, 0.765, 0.582, 0.519, 0.504];
